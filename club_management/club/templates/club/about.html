@@ -1,8 +1,8 @@
-{% extends "blog/base.html"%}
+{% extends "club/base.html"%}
 {% block content %}
 <h2><bold>About Page</bold></h2>
 This is about page, go check it out
 {% for type in types %}
-    <p>{{ type }}</p>
+    <p>{{ type.author }}</p>
 {% endfor %}
 {% endblock content %}

@@ -1,0 +1,12 @@
+{% extends "club/base.html"%}
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Register</legend>
+            {{ form.as_p }}
+        </fieldset>
+            <button type="submit">Sign Up</button> <br>
+            <small>Already have an account</small> <a href="#">Sign In</a>
+    </form>
+{% endblock content %}

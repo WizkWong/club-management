@@ -13,7 +13,12 @@
 <body>
     <a href="{% url 'club-home'%}">Home</a>
     <a href="{% url 'club-about'%}">About</a>
-    <a href="{% url 'user-register'%}">Register</a> <br>
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout'%}">LogOut</a> <br>
+    {% else %}
+        <a href="{% url 'login'%}">Login</a>
+        <a href="{% url 'register'%}">Register</a> <br>
+    {% endif %}
     {% if messages %}
         {% for message in messages %}
             <div>

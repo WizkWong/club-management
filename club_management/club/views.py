@@ -20,12 +20,13 @@ posts = [
 def home(request):
     context = {
         'profile': posts,
-        'title': 'home'
+        'title': 'Home'
     }
     return render(request, 'club/home.html', context)
 
 def about(request):
     context = {
-        'post': Post.objects.all()
+        'post': Post.objects.all(),
+        'title': 'About'
     }
     return render(request, 'club/about.html', context)

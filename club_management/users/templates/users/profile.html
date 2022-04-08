@@ -1,4 +1,7 @@
 {% extends "club/base.html"%}
 {% block content %}
-    <h1>{{ user.username }}</h1>
+    <h1>Profile</h1>
+    <img class="profile" src="{{ user.profile.image.url }}">
+    <h3>{{ user.username }}</h3>
+    <h4>{{ user.email }}</h4>
 {% endblock content %}

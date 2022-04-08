@@ -3,12 +3,12 @@
     <form method="POST">
         {% csrf_token %}
         <fieldset>
-            <legend>Register</legend>
+            <legend>Log In</legend>
             {{ form.as_p }}
         </fieldset>
-            <button type="submit">Sign Up</button> <br>
+            <button type="submit">Login</button> <br>
             <small>
-                Already have an account <a href="{% url 'login'%}">Sign In</a>
+                No account? <a href="{% url 'register'%}">Register</a>
             </small>
     </form>
 {% endblock content %}

@@ -1,0 +1,65 @@
+<ul class="nav">
+    {% if user.is_authenticated %}
+    <li><a class="nav" style="padding: 26px 10px;">
+        <ul class="sidebar">
+            <li><div class="rectangle"></div></li>
+            <li><div class="rectangle"></div></li>
+            <li><div class="rectangle"></div></li>
+        </ul>
+    </a></li>
+    {% endif %}
+    <li><a class="nav {% if title == 'Home' %}select{% endif %}" href="{% url 'club-home'%}">Home</a></li>
+    <li><a class="nav {% if title == 'Event' %}select{% endif %}">Event</a></li>
+    <li><a class="nav {% if title == 'About' %}select{% endif %}" href="{% url 'club-about'%}">About</a></li>
+    {% if user.is_authenticated %}
+    <li style="float:right"><a class="nav">Profile</a></li>
+    {% else %}
+    <li style="float:right"><a class="nav {% if title == 'Register' %}select{% endif %}" href="{% url 'register' %}">Join</a></li>
+    <li style="float:right"><a class="nav {% if title == 'Login' %}select{% endif %}" href="{% url 'login' %}">Sign In</a></li>
+    {% endif %}
+</ul>
+
+<style>
+    ul.nav{
+        list-style-type: none;
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+        background-color: #232B2B
+    }
+
+    li a.nav{
+        float:left;
+        display: block;
+        color: white;
+        padding: 25px 35px;
+        text-align: center;
+        text-decoration: none;
+        min-width: 60px;
+        font-size: 18px;
+    }
+
+    li a.nav:hover{
+        background-color: #496b6b
+    }
+
+    li a.nav.select{
+        background-color: #27B935
+    }
+
+    ul.sidebar{
+        list-style-type: none;
+        padding: 0px 15px;
+        margin: 0px;
+        overflow: hidden;
+    }
+
+    .rectangle {
+        float: bottom;
+        width: 100%;
+        min-height: 2.5px;
+        margin: 3px 0px;
+        background-color: #ffffff;
+        overflow: hidden;
+    }
+</style>

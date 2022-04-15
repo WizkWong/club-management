@@ -12,7 +12,7 @@
     <li><a class="nav {% if title == 'Event' %}select{% endif %}">Event</a></li>
     <li><a class="nav {% if title == 'About' %}select{% endif %}" href="{% url 'club-about'%}">About</a></li>
     {% if user.is_authenticated %}
-    <li style="float:right"><a class="nav">Profile</a></li>
+    <li style="float:right"><a class="nav {% if title == 'Your Profile' %}select{% endif %}" href="{% url 'user-profile' %}">Profile</a></li>
     {% else %}
     <li style="float:right"><a class="nav {% if title == 'Register' %}select{% endif %}" href="{% url 'register' %}">Join</a></li>
     <li style="float:right"><a class="nav {% if title == 'Login' %}select{% endif %}" href="{% url 'login' %}">Sign In</a></li>

@@ -1,6 +1,9 @@
+{% if user.is_authenticated %}
+    {% include 'club\sidebar.html' %}
+{% endif %}
 <ul class="nav">
     {% if user.is_authenticated %}
-    <li><a class="nav" style="padding: 19px 0px;">
+    <li onclick="openNav()"><a class="nav" style="padding: 19px 0px;">
         <ul class="sidebar">
             <li><div class="rectangle"></div></li>
             <li><div class="rectangle"></div></li>

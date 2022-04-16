@@ -1,6 +1,6 @@
 <ul class="nav">
     {% if user.is_authenticated %}
-    <li><a class="nav" style="padding: 26px 10px;">
+    <li><a class="nav" style="padding: 19px 0px;">
         <ul class="sidebar">
             <li><div class="rectangle"></div></li>
             <li><div class="rectangle"></div></li>
@@ -12,54 +12,125 @@
     <li><a class="nav {% if title == 'Event' %}select{% endif %}">Event</a></li>
     <li><a class="nav {% if title == 'About' %}select{% endif %}" href="{% url 'club-about'%}">About</a></li>
     {% if user.is_authenticated %}
-    <li style="float:right"><a class="nav {% if title == 'Your Profile' %}select{% endif %}" href="{% url 'user-profile' %}">Profile</a></li>
+    <li class="dropdown">
+        <a class="dropbtn">
+            <img class="profile-pic" src="{{ user.profile.image.url }}">
+        </a>
+        <a class="name">{{ user.username }}</a>
+        <div class="dropdown-content">
+            <a href="{% url 'user-profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Log Out</a>
+        </div>
+    </li>
+
     {% else %}
     <li style="float:right"><a class="nav {% if title == 'Register' %}select{% endif %}" href="{% url 'register' %}">Join</a></li>
     <li style="float:right"><a class="nav {% if title == 'Login' %}select{% endif %}" href="{% url 'login' %}">Sign In</a></li>
     {% endif %}
 </ul>
 
+
+
 <style>
     ul.nav{
         list-style-type: none;
+        top: 0px;
+        position: sticky;
+        width: 100%;
+        min-height: 61px;
         padding: 0px;
         margin: 0px;
-        overflow: hidden;
-        background-color: #232B2B
+        background-color: #232B2B;
     }
 
-    li a.nav{
+    li a.nav {
         float:left;
         display: block;
         color: white;
-        padding: 25px 35px;
+        padding: 20px 25px;
         text-align: center;
         text-decoration: none;
         min-width: 60px;
         font-size: 18px;
     }
 
-    li a.nav:hover{
-        background-color: #496b6b
+    li a.name {
+        float: right;
+        display: block;
+        color: white;
+        padding: 20px 10px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    li.dropdown {
+        float: right;
+        display: block;
+        text-decoration: none;
+    }
+
+    li a.dropbtn {
+        float: right;
+        display: block;
+    }
+
+    .profile-pic {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        padding-top: 2px;
+
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
+
+    li a.nav:hover {
+        background-color: #496b6b;
     }
 
     li a.nav.select{
-        background-color: #27B935
+        background-color: #27B935;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 61px;
+        right: 0px;
+        background-color: #B9C7C7;
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 20px 25px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    li a.name:hover .dropdown-content, li.dropdown:hover .dropdown-content {
+        display: block;
     }
 
     ul.sidebar{
         list-style-type: none;
-        padding: 0px 15px;
+        padding: 0px 20px;
         margin: 0px;
-        overflow: hidden;
     }
 
     .rectangle {
         float: bottom;
         width: 100%;
-        min-height: 2.5px;
-        margin: 3px 0px;
+        min-height: 1px;
+        margin: 5px 0px;
         background-color: #ffffff;
-        overflow: hidden;
     }
+
 </style>

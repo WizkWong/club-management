@@ -1,10 +1,19 @@
-.profile {
-  display: inline-block;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+body {
+    margin:0;
+}
 
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+.profile {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.main {
+    margin-top: 0px;
+    margin-left: 5px;
 }

@@ -11,7 +11,8 @@
     {% endif %}
 </head>
 <body>
-    {% include 'club/navigation bar.html' %}
+    <p>Image</p>
+    {% include "club\navigation bar.html" %}
     {% if messages %}
         {% for message in messages %}
             <div>
@@ -20,6 +21,8 @@
             </div>
         {% endfor %}
     {% endif %}
+    <div class="main">
     {% block content %}{% endblock %}
+    </div>
 </body>
 </html>

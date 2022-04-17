@@ -11,6 +11,9 @@
     {% endif %}
 </head>
 <body>
+    {% if user.is_authenticated %}
+        {% include 'club\sidebar.html' %}
+    {% endif %}
 <div id="sidebar">
     <p>Image</p>
     {% include "club\navigation bar.html" %}

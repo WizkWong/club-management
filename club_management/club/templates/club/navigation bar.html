@@ -1,9 +1,6 @@
-{% if user.is_authenticated %}
-    {% include 'club\sidebar.html' %}
-{% endif %}
 <ul class="nav">
     {% if user.is_authenticated %}
-    <li onclick="openNav()"><a class="nav" style="padding: 19px 0px;">
+    <li onclick="toggleSidebar()"><a class="nav" style="padding: 19px 0px;">
         <ul class="sidebar">
             <li><div class="rectangle"></div></li>
             <li><div class="rectangle"></div></li>
@@ -32,8 +29,6 @@
     {% endif %}
 </ul>
 
-
-
 <style>
     ul.nav{
         list-style-type: none;
@@ -42,7 +37,7 @@
         width: 100%;
         min-height: 61px;
         padding: 0px;
-        margin: 0px;
+        margin-bottom: 10px;
         background-color: #232B2B;
     }
 

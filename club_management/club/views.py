@@ -1,4 +1,5 @@
 from django.shortcuts import render
+
 # from django.http import HttpResponse
 
 posts = [
@@ -16,6 +17,7 @@ posts = [
     }
 ]
 
+
 def home(request):
     context = {
         'profile': posts,
@@ -23,9 +25,12 @@ def home(request):
     }
     return render(request, 'club/home.html', context)
 
+
 def about(request):
     context = {
         'post': posts,
         'title': 'About'
     }
     return render(request, 'club/about.html', context)
+
+

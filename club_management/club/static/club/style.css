@@ -17,8 +17,3 @@ body {
     margin-top: 0px;
     margin-left: 10px;
 }
-
-
-#sidebar {
-  transition: margin-left 0.5s;
-}

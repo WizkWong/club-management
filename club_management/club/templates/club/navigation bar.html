@@ -13,9 +13,7 @@
     <li><a class="nav {% if title == 'About' %}select{% endif %}" href="{% url 'club-about'%}">About</a></li>
     {% if user.is_authenticated %}
     <li class="dropdown">
-        <a class="dropbtn">
-            <img class="profile-pic" src="{{ user.profile.image.url }}">
-        </a>
+        <a><img class="profile-pic" src="{{ user.profile.image.url }}"></a>
         <div class="dropdown-content">
             <a href="{% url 'user-profile' %}">Profile</a>
             <a href="{% url 'logout' %}">Log Out</a>
@@ -66,19 +64,11 @@
         float: right;
         display: block;
         text-decoration: none;
-        padding: 0px;
-    }
-
-    li a.dropbtn {
-        float: right;
-        display: block;
-        padding: 30.5px 46.5px;
+        padding: 0px 19px;
+        padding-top: 2px;
     }
 
     .profile-pic {
-        position: absolute;
-        right: 20px;
-        top: 3px;
         width: 55px;
         height: 55px;
         border-radius: 50%;

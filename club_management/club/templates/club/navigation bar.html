@@ -16,12 +16,12 @@
         <a class="dropbtn">
             <img class="profile-pic" src="{{ user.profile.image.url }}">
         </a>
-        <a class="name">{{ user.username }}</a>
         <div class="dropdown-content">
             <a href="{% url 'user-profile' %}">Profile</a>
             <a href="{% url 'logout' %}">Log Out</a>
         </div>
     </li>
+    <li><a class="name">{{ user.username }}</a></li>
 
     {% else %}
     <li style="float:right"><a class="nav {% if title == 'Register' %}select{% endif %}" href="{% url 'register' %}">Join</a></li>
@@ -56,8 +56,9 @@
         float: right;
         display: block;
         color: white;
-        padding: 20px 10px;
+        padding: 20px 0px;
         text-align: center;
+        text-decoration: none;
         font-size: 18px;
     }
 
@@ -65,21 +66,24 @@
         float: right;
         display: block;
         text-decoration: none;
+        padding: 0px;
     }
 
     li a.dropbtn {
         float: right;
         display: block;
+        padding: 30.5px 46.5px;
     }
 
     .profile-pic {
+        position: absolute;
+        right: 20px;
+        top: 3px;
         width: 55px;
         height: 55px;
         border-radius: 50%;
-        padding-top: 2px;
-
         background-repeat: no-repeat;
-        background-position: center center;
+        background-position: center;
         background-size: cover;
     }
 
@@ -102,7 +106,7 @@
 
     .dropdown-content a {
         color: black;
-        padding: 20px 25px;
+        padding: 20px;
         font-size: 16px;
         text-align: center;
         text-decoration: none;
@@ -113,7 +117,7 @@
         background-color: #f1f1f1;
     }
 
-    li a.name:hover .dropdown-content, li.dropdown:hover .dropdown-content {
+    li.dropdown:hover .dropdown-content {
         display: block;
     }
 

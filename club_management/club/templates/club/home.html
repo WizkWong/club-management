@@ -6,6 +6,22 @@ This is home page, Welcome
     <h3>{{ post.title }}</h3>
     <p>{{ post.author }} on {{ post.date_posted }}</p>
     <p>{{ post.content }}</p>
+{% endfor %}{% for post in profile %}
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.author }} on {{ post.date_posted }}</p>
+    <p>{{ post.content }}</p>
+{% endfor %}{% for post in profile %}
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.author }} on {{ post.date_posted }}</p>
+    <p>{{ post.content }}</p>
 {% endfor %}
 <br>
+
+<div class="footer">
+    <div class="footerbox">
+        <p>Contact Us</p>
+        <p>Phone Number:+6017-6539532</p>
+        <p>Email Address: address</p>
+    </div>
+</div>
 {% endblock %}

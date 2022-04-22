@@ -51,6 +51,13 @@ def logout_request(request):
     return redirect("club-home")
 
 
+def view_task(request):
+    content = {
+        'title': 'User Task'
+    }
+    return render(request, 'users/task.html', content)
+
+
 @login_required
 def profile(request):
     if request.method == 'POST':

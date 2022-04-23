@@ -15,7 +15,9 @@
         {% include 'club\sidebar.html' %}
     {% endif %}
 <div id="sidebar">
-    <p>Image</p>
+    {% if title == "Home" or title == "About" %}
+        <img class="top-background" src="{% static 'club/default-top-background.jpg' %}" alt="background-picture">
+    {% endif %}
     {% include "club\navigation bar.html" %}
     {% if messages %}
         {% for message in messages %}

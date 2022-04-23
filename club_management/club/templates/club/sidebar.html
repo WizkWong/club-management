@@ -15,15 +15,15 @@
 
 function toggleSidebar() {
     var size = parseInt(document.getElementById("mySidemenu").style.width)
-    if (size == 120) {
+    if (size == 150) {
       return closeSidebar()
     }
     return openSidebar()
 }
 
 function openSidebar() {
-    document.getElementById("mySidemenu").style.width = "120px";
-    document.getElementById("sidebar").style.marginLeft = "120px";
+    document.getElementById("mySidemenu").style.width = "150px";
+    document.getElementById("sidebar").style.marginLeft = "150px";
 }
 
 function closeSidebar() {

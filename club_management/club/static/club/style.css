@@ -1,5 +1,6 @@
 body {
     margin:0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .profile {
@@ -19,17 +20,42 @@ body {
 
 .container {
     display: block;
-    border-style: solid;
-    border-width: 2px;
     padding: 10px;
     margin: 10px;
 }
 
-.container p.form {
-    color: black;
-    margin: 25px;
+.container legend {
     font-size: 20px;
-    text-align: left;
+}
+
+.container button{
+    font-weight: bold;
+    color: white;
+    background-color: #3681f7;
+    border: none;
+    padding: 10px 20px;;
+    margin: 10px 0px;
+    border-radius: 5px;
+}
+
+.container button:hover{
+    background-color: #1961d1;
+}
+
+.container input{
+    border: 1px solid;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.container small{
+    font-size: 14px;
+}
+
+.container small a{
+    font-weight: bold;
+    color: #3681f7;
+    text-decoration: none;
 }
 
 .footer {

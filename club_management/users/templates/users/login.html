@@ -1,14 +1,16 @@
 {% extends "club/base.html"%}
 {% block content %}
+<div class="container">
     <form method="POST">
         {% csrf_token %}
         <fieldset>
-            <legend>Log In</legend>
+            <legend>Sign In</legend>
             {{ form.as_p }}
         </fieldset>
-            <button type="submit">Login</button> <br>
+            <button type="submit">Sign In</button> <br>
             <small>
                 No account? <a href="{% url 'register'%}">Register</a>
             </small>
     </form>
+</div>
 {% endblock content %}

@@ -2,7 +2,9 @@
 {% block content %}
 <h2><bold>About Page</bold></h2>
 This is about page, go check it out
-{% for type in post %}
-    <p>{{ type.author }}</p>
-{% endfor %}
+<form action="." method="post">
+    {% csrf_token %}
+    <input type="text" name="search" placeholder="Search">
+    <input type="submit" value="Search">
+</form>
 {% endblock %}

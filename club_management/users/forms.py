@@ -5,6 +5,10 @@ from .models import profile
 
 
 class UserRegisterForm(UserCreationForm):
+    username = forms.CharField(help_text='Required 6-30 character',
+                               max_length=30,
+                               min_length=6,
+                               widget=forms.TextInput(attrs={'size': 20}))
     email = forms.EmailField()
 
     class Meta:
@@ -13,7 +17,11 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
+    username = forms.CharField(help_text='Required 6-30 character',
+                               max_length=30,
+                               min_length=6,
+                               widget=forms.TextInput(attrs={'size': 20}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'size': 35}))
 
     class Meta:
         model = User
@@ -21,6 +29,15 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    description = forms.CharField(required=False,
+                                  widget=forms.Textarea(
+                                      attrs={
+                                          "placeholder": "Your Description...",
+                                          "rows": 10,
+                                          "cols": 70,
+                                          "class": "field"
+                                      }
+                                  ))
 
     class Meta:
         model = profile

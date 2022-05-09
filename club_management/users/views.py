@@ -51,13 +51,6 @@ def logout_request(request):
     return redirect("club-home")
 
 
-def view_task(request):
-    content = {
-        'title': 'User Task'
-    }
-    return render(request, 'users/task.html', content)
-
-
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -83,3 +76,27 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+
+@login_required
+def view_task(request):
+    content = {
+        'title': 'User Task'
+    }
+    return render(request, 'users/task.html', content)
+
+
+@login_required
+def view_request(request):
+    content = {
+        'title': 'User Request'
+    }
+    return render(request, 'users/request.html', content)
+
+
+@login_required
+def view_attendance(request):
+    content = {
+        'title': 'User Attendance'
+    }
+    return render(request, 'users/attendance.html', content)

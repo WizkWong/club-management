@@ -12,9 +12,18 @@ class Event(models.Model):
 
 
 class Attendance_of_user(models.Model):
+    LATE = 2
+    PRESENT = 1
+    ABSENT = 0
+
+    ATTENDANCE = {
+        (LATE, 'Late'),
+        (PRESENT, 'Present'),
+        (ABSENT, 'Absent')
+    }
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    present = models.BooleanField(default=False)
+    attendance = models.IntegerField(max_length=1, choices=ATTENDANCE, default=ABSENT)
 
     class Meta:
         unique_together = (('event', 'user'),)
@@ -32,10 +41,19 @@ class Request_feedback(models.Model):
     do not use "from users.models import User_request", below a line from "User_request" to "users.User_request" to
     avoid the circular import error
     """
-    request = models.OneToOneField("users.User_request", on_delete=models.CASCADE, primary_key=True)
+    PENDING = 2
+    ACCEPT = 1
+    REJECT = 0
+
+    APPROVAL = {
+        (PENDING, 'Pending'),
+        (ACCEPT, 'Accept'),
+        (REJECT, 'Reject')
+    }
+    request = models.OneToOneField('users.User_request', on_delete=models.CASCADE, primary_key=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    accept = models.BooleanField(null=True)
-    feedback = models.TextField(null=True)
+    approval = models.IntegerField(max_length=1, choices=APPROVAL, default=PENDING)
+    feedback = models.TextField(null=True, default=None)
 
 
 class Report(models.Model):

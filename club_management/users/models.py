@@ -22,9 +22,24 @@ class User_request(models.Model):
 class Task_assigned(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    upload_file = models.FileField(null=True, upload_to='files')
+    upload_file = models.FileField(null=True, upload_to='files', default=None)
     complete = models.BooleanField(default=False)
-    datetime_complete = models.DateTimeField(default=timezone.now)
+    datetime_complete = models.DateTimeField(null=True, default=None)
 
     class Meta:
         unique_together = (('task', 'user'),)
+
+
+class Chat(models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    detail = models.TextField(null=True, default=None)
+    file = models.FileField(null=True, upload_to='chat_files', default=None)
+    image = models.ImageField(null=True, upload_to='chat_files', default=None)
+    datetime_created = models.DateTimeField(default=timezone.now)
+
+
+class Pending_user(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    description = models.TextField()
+    datetime_created = models.DateTimeField(default=timezone.now)

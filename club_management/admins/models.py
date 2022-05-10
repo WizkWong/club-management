@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from users.models import User_request
 
 
 class Event(models.Model):
@@ -29,7 +28,11 @@ class Task(models.Model):
 
 
 class Request_feedback(models.Model):
-    request = models.OneToOneField(User_request, on_delete=models.CASCADE, primary_key=True)
+    """
+    do not use "from users.models import User_request", below a line from "User_request" to "users.User_request" to
+    avoid the circular import error
+    """
+    request = models.OneToOneField("users.User_request", on_delete=models.CASCADE, primary_key=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     accept = models.BooleanField(null=True)
     feedback = models.TextField(null=True)

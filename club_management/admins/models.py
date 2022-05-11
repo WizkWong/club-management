@@ -23,7 +23,7 @@ class Attendance_of_user(models.Model):
     }
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    attendance = models.IntegerField(max_length=1, choices=ATTENDANCE, default=ABSENT)
+    attendance = models.IntegerField(choices=ATTENDANCE, default=ABSENT)
 
     class Meta:
         unique_together = (('event', 'user'),)
@@ -52,7 +52,7 @@ class Request_feedback(models.Model):
     }
     request = models.OneToOneField('users.User_request', on_delete=models.CASCADE, primary_key=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    approval = models.IntegerField(max_length=1, choices=APPROVAL, default=PENDING)
+    approval = models.IntegerField(choices=APPROVAL, default=PENDING)
     feedback = models.TextField(null=True, default=None)
 
 

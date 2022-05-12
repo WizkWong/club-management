@@ -1,0 +1,15 @@
+{% extends "club/base.html"%}
+{% block content %}
+<div class = "container">
+    <br>
+    <a class="button" href="{% url 'admin-user' %}">Back</a> <br> <br>
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Add New User</legend>
+            {{ form.as_p }}
+        </fieldset>
+            <button type="submit">Add User</button> <br>
+    </form>
+</div>
+{% endblock content %}

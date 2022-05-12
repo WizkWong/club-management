@@ -72,6 +72,7 @@ def edit_user(request, pk):
     return render(request, 'admins/manage user/edit user.html', content)
 
 
+@login_required
 def change_password(request, pk):
     permission(request)
     user = get_object_or_404(User, Q(is_superuser=False), username=pk)
@@ -131,7 +132,6 @@ def delete_user(request, pk):
     }
 
     return render(request, 'admins/manage user/delete user.html', content)
-
 
 
 @login_required

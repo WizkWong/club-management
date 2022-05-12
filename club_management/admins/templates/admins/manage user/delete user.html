@@ -1,0 +1,14 @@
+{% extends "club/base.html"%}
+{% block content %}
+<h1>Are you sure you want to delete Account: {{ username }}</h1>
+<table>
+    <th style="width: 100px;"><a class="button" href="{% url 'admin-user' %}">Cancel</a></th>
+    <th style="width: 200px;">
+        <form method="POST">
+            {% csrf_token %}
+            <button class="button" type="submit">Delete</button>
+        </form>
+    </th>
+</table>
+
+{% endblock content %}

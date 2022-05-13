@@ -1,0 +1,12 @@
+{% extends "club/base.html"%}
+{% block content %}
+<br>
+<a class="button" href="{% url 'user-request' %}">Back</a>
+<br><br>
+<h3>{{ request.title }}</h3>
+<p>{{ request.detail }}</p>
+<small>{{ request.datetime_created|date:"d F Y P" }}</small>
+<br><br>
+<br><br>
+<a class="button" href="{% url 'user-request-delete' request.id %}">Delete</a>
+{% endblock %}

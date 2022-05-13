@@ -4,6 +4,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .models import User_request
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.contrib.auth.models import User
 
 
@@ -86,12 +88,33 @@ def view_task(request):
     return render(request, 'users/task.html', content)
 
 
-@login_required
-def view_request(request):
-    content = {
-        'title': 'User Request'
-    }
-    return render(request, 'users/request.html', content)
+class RequestListView(ListView):
+    model = User_request
+    template_name = 'users/request/view request.html'
+    context_object_name = 'requests'
+    ordering = ['-datetime_created']
+
+
+class RequestDetailView(DetailView):
+    model = User_request
+    template_name = 'users/request/view request detail.html'
+    context_object_name = 'request'
+
+
+class RequestCreateView(CreateView):
+    model = User_request
+    template_name = 'users/request/create request.html'
+    fields = ['title', 'detail']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class RequestDeleteView(DeleteView):
+    model = User_request
+    template_name = 'users/request/delete request.html'
+    success_url = '/request/'
 
 
 @login_required

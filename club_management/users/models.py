@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from admins.models import Task
+from django.urls import reverse
 
 
 class profile(models.Model):
@@ -15,8 +16,12 @@ class profile(models.Model):
 
 class User_request(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    datetime_created = models.DateTimeField(default=timezone.now)
+    title = models.CharField(max_length=100)
     detail = models.TextField()
+    datetime_created = models.DateTimeField(default=timezone.now)
+
+    def get_absolute_url(self):
+        return reverse('user-request')
 
 
 class Task_assigned(models.Model):

@@ -40,7 +40,7 @@ def manage_user(request):
         'title': 'Manage User',
         'all_user': User.objects.filter(is_superuser=False)
     }
-    return render(request, 'admins/manage user/user.html', content)
+    return render(request, 'admins/manage user/view_user.html', content)
 
 
 @login_required

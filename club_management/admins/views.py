@@ -100,7 +100,7 @@ def change_password(request, pk):
 def add_user(request):
     permission(request)
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = UserRegisterForm(request.user, request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             form.save()
@@ -123,7 +123,7 @@ def delete_user(request, pk):
     permission(request)
     if request.method == 'POST':
         User.objects.filter(username=user.username).delete()
-        messages.success(request, f'{pk} account are successfully delete!')
+        messages.success(request, f'{pk} account is successfully delete!')
         return redirect('admin-user')
 
     content = {

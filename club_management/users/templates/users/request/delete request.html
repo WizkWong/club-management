@@ -1,8 +1,8 @@
 {% extends "club/base.html"%}
 {% block content %}
-<h1>Are you sure you want to delete Request: {{ object.title }}</h1>
+<h1>Are you sure you want to delete Request: {{ request.title }}</h1>
 <table>
-    <th style="width: 100px;"><a class="button" href="{% url 'user-request-detail' object.id %}">Cancel</a></th>
+    <th style="width: 100px;"><a class="button" href="{% url 'user-request-detail' request.id %}">Cancel</a></th>
     <th style="width: 150px;">
         <form method="POST">
             {% csrf_token %}

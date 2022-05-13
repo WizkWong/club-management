@@ -20,9 +20,6 @@ class User_request(models.Model):
     detail = models.TextField()
     datetime_created = models.DateTimeField(default=timezone.now)
 
-    def get_absolute_url(self):
-        return reverse('user-request')
-
 
 class Task_assigned(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)

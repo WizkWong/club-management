@@ -1,0 +1,25 @@
+{% extends "club/base.html"%}
+{% block content %}
+<div class="container">
+<br>
+<a class="button" href="{% url 'admin-request' %}">Back</a>
+<br><br>
+<h3>{{ request.title }}</h3>
+<br>
+{{ request.datetime_created|date:"d F Y P" }}
+<br>
+{{ request.detail }}
+<br>
+request by {{ request.user }}
+<br>
+<br>
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>FeedBack</legend>
+            {{ form.as_p }}
+        </fieldset>
+            <button type="submit">Reply</button>
+    </form>
+</div>
+{% endblock %}

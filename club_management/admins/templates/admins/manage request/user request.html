@@ -1,0 +1,19 @@
+{% extends "club/base.html"%}
+{% block content %}
+<h3>All User Request</h3>
+<br>
+{% for request in requests %}
+    <a href="{% url 'admin-request-detail' request.id %}">
+        {{ request.datetime_created|date:"d F Y P" }}
+        <br>
+        {{ request.title }}
+        <br>
+        request by {{ request.user }}
+        <br>
+    </a>
+<br>
+<br>
+<br>
+{% endfor %}
+
+{% endblock %}

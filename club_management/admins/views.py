@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm
+from users.models import User_request
+from .forms import RequestFeedbackForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -82,7 +84,7 @@ def change_password(request, pk):
         if form.is_valid():
             user_pss = form.save()
             update_session_auth_hash(request, user_pss)
-            messages.success(request, 'Your password was successfully updated!')
+            messages.success(request, f'Account {pk} password was successfully change!')
             return redirect('admin-user')
 
     else:
@@ -100,7 +102,7 @@ def change_password(request, pk):
 def add_user(request):
     permission(request)
     if request.method == 'POST':
-        form = UserRegisterForm(request.user, request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             form.save()
@@ -138,7 +140,8 @@ def delete_user(request, pk):
 def manage_request(request):
     permission(request)
     content = {
-        'title': 'Manage Request'
+        'title': 'Manage Request',
+        'requests': User_request.objects.all()
     }
     return render(request, 'admins/request.html', content)
 

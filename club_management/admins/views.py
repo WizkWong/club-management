@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm
 from users.models import User_request
+from .models import Request_feedback
 from .forms import RequestFeedbackForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
@@ -139,11 +140,41 @@ def delete_user(request, pk):
 @login_required
 def manage_request(request):
     permission(request)
+    # feedbacks = Request_feedback.objects.filter(approval=Request_feedback.PENDING)
+    for feedbacks in Request_feedback.objects.filter(approval=Request_feedback.PENDING):
+        print(feedbacks)
     content = {
         'title': 'Manage Request',
         'requests': User_request.objects.all()
     }
-    return render(request, 'admins/request.html', content)
+    return render(request, 'admins/manage request/user request.html', content)
+
+
+@login_required
+def view_request_detail(request, pk):
+    user_request = get_object_or_404(User_request, id=pk)
+    permission(request)
+    if request.method == 'POST':
+        form = RequestFeedbackForm(request.POST)
+
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.request_id = user_request.id
+            form.user = request.user
+            form.save()
+            messages.success(request, f'Reply the request of Title:"{pk}" successfully')
+            return redirect('admin-request')
+
+    else:
+        form = RequestFeedbackForm()
+
+    content = {
+        'title': 'Manage Request',
+        'request': user_request,
+        'form': form
+    }
+    return render(request, 'admins/manage request/user request detail.html', content)
+
 
 
 @login_required

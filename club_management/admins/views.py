@@ -138,23 +138,52 @@ def delete_user(request, pk):
 
 
 @login_required
-def manage_request(request):
+def manage_all_request(request):
     permission(request)
 
     content = {
         'title': 'Manage Request',
-        'requests': [r for r in User_request.objects.all() if r.request_feedback.approval == Request_feedback.PENDING]
+        'type': 'all',
+        'requests': User_request.objects.all().order_by('-datetime_created')
     }
     return render(request, 'admins/manage request/user request.html', content)
 
 
 @login_required
-def manage_request_feedback(request):
+def manage_pending_request(request):
     permission(request)
 
     content = {
         'title': 'Manage Request',
-        'requests': [r for r in User_request.objects.all() if r.request_feedback.approval != Request_feedback.PENDING]
+        'type': 'pending',
+        'requests': [r for r in User_request.objects.all().order_by('-datetime_created') if
+                     r.request_feedback.approval == Request_feedback.PENDING]
+    }
+    return render(request, 'admins/manage request/user request.html', content)
+
+
+@login_required
+def manage_accept_request(request):
+    permission(request)
+
+    content = {
+        'title': 'Manage Request',
+        'type': 'accept',
+        'requests': [r for r in User_request.objects.all().order_by('-datetime_created') if
+                     r.request_feedback.approval == Request_feedback.ACCEPT]
+    }
+    return render(request, 'admins/manage request/user request.html', content)
+
+
+@login_required
+def manage_reject_request(request):
+    permission(request)
+
+    content = {
+        'title': 'Manage Request',
+        'type': 'reject',
+        'requests': [r for r in User_request.objects.all().order_by('-datetime_created') if
+                     r.request_feedback.approval == Request_feedback.REJECT]
     }
     return render(request, 'admins/manage request/user request.html', content)
 

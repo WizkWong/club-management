@@ -2,11 +2,23 @@
 {% block content %}
 <h3>All User Request</h3>
 <br>
-<a href="{% url 'admin-request' %}">View User Request</a>
-<a href="{% url 'admin-request-feedback' %}">View Request Feedback</a>
-<br>
-<br>
+<div class="selectBox">
+    <a class="{% if type == 'all' %}select{% endif %}" href="{% url 'admin-request' %}">All</a>
+    <a class="{% if type == 'pending' %}select{% endif %}" href="{% url 'admin-request-pending' %}">Pending</a>
+    <a class="{% if type == 'accept' %}select{% endif %}" href="{% url 'admin-request-accept' %}">Accept</a>
+    <a class="{% if type == 'reject' %}select{% endif %}" href="{% url 'admin-request-reject' %}">Reject</a>
+</div>
 {% for request in requests %}
+<div class="rectangleBox" style="
+    {% if request.request_feedback.approval == 1 %}
+        background-color: #67F178;
+    {% elif request.request_feedback.approval == 0 %}
+        background-color: #F16767;
+    {% else %}
+        background-color: #FFFF00;
+    {% endif %}
+">
+
     <a href="{% url 'admin-request-detail' request.id %}">
         {{ request.datetime_created|date:"d F Y P" }}
         <br>
@@ -20,11 +32,13 @@
         {% elif request.request_feedback.approval == 0 %}
         Rejected
         <br>
+        {% elif request.request_feedback.approval == 2 %}
+        Pending
+        <br>
         {% endif %}
     </a>
 <br>
-<br>
-<br>
+</div>
 {% endfor %}
 
 {% endblock %}

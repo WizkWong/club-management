@@ -52,7 +52,7 @@ body {
     font-size: 20px;
 }
 
-.container button, .button, table a, .modify a {
+.container button, .button, table a, .header a {
     background-color: #3681f7;
     border: none;
     border-radius: 5px;
@@ -64,7 +64,7 @@ body {
     text-decoration: none;
 }
 
-.container button:hover, .button:hover, table a:hover, .modify a:hover{
+.container button:hover, .button:hover, table a:hover, .header a:hover{
     background-color: #1961d1;
 }
 
@@ -141,13 +141,46 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-ul.modify{
+ul.header{
     padding: 0px;
 }
 
-.modify li{
+.header li{
     list-style-type: none;
     float: left;
     margin: 0px 5px 5px;
 }
 
+.selectBox {
+    width: 100%;
+    padding-bottom: 9.5px;
+    border-color: #C6C6C6;
+    border-bottom-style: solid;
+    margin-bottom: 10px;
+}
+
+.selectBox a {
+    text-decoration: none;
+    color: black;
+    padding: 10px 20px;
+    margin: 0px;
+}
+
+.selectBox a.select {
+    background: #E5F3F6;
+    border: 3px outset #A7A7A2;
+    border-bottom-style: none;
+}
+
+.rectangleBox {
+    position: relative;
+    width: 100%;
+    box-shadow: 3px 3px #E8E8E8;
+    border-radius: 10px;
+    margin: 0px 0px 10px;
+}
+
+.rectangleBox a {
+    color: black;
+    text-decoration: none;
+}

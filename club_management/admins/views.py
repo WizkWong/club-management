@@ -126,12 +126,12 @@ def delete_user(request, pk):
     permission(request)
     if request.method == 'POST':
         User.objects.filter(username=user.username).delete()
-        messages.success(request, f'{pk} account is successfully delete!')
+        messages.success(request, f'{user.username} account is successfully delete!')
         return redirect('admin-user')
 
     content = {
         'title': 'Delete User',
-        'username': pk
+        'username': user.username
     }
 
     return render(request, 'admins/manage user/delete user.html', content)
@@ -140,12 +140,21 @@ def delete_user(request, pk):
 @login_required
 def manage_request(request):
     permission(request)
-    # feedbacks = Request_feedback.objects.filter(approval=Request_feedback.PENDING)
-    for feedbacks in Request_feedback.objects.filter(approval=Request_feedback.PENDING):
-        print(feedbacks)
+
     content = {
         'title': 'Manage Request',
-        'requests': User_request.objects.all()
+        'requests': [r for r in User_request.objects.all() if r.request_feedback.approval == Request_feedback.PENDING]
+    }
+    return render(request, 'admins/manage request/user request.html', content)
+
+
+@login_required
+def manage_request_feedback(request):
+    permission(request)
+
+    content = {
+        'title': 'Manage Request',
+        'requests': [r for r in User_request.objects.all() if r.request_feedback.approval != Request_feedback.PENDING]
     }
     return render(request, 'admins/manage request/user request.html', content)
 
@@ -155,7 +164,7 @@ def view_request_detail(request, pk):
     user_request = get_object_or_404(User_request, id=pk)
     permission(request)
     if request.method == 'POST':
-        form = RequestFeedbackForm(request.POST)
+        form = RequestFeedbackForm(request.POST, instance=user_request.request_feedback)
 
         if form.is_valid():
             form = form.save(commit=False)
@@ -166,7 +175,7 @@ def view_request_detail(request, pk):
             return redirect('admin-request')
 
     else:
-        form = RequestFeedbackForm()
+        form = RequestFeedbackForm(instance=user_request.request_feedback)
 
     content = {
         'title': 'Manage Request',
@@ -175,6 +184,22 @@ def view_request_detail(request, pk):
     }
     return render(request, 'admins/manage request/user request detail.html', content)
 
+
+@login_required
+def delete_request(request, pk):
+    user_request = get_object_or_404(User_request, id=pk)
+    permission(request)
+    if request.method == 'POST':
+        User.objects.filter(id=pk).delete()
+        messages.success(request, f'{user_request.title} request is successfully delete!')
+        return redirect('admin-request-feedback')
+
+    content = {
+        'title': 'Delete Request',
+        'request': user_request
+    }
+
+    return render(request, 'admins/manage request/delete request.html', content)
 
 
 @login_required

@@ -1,0 +1,15 @@
+{% extends "club/base.html"%}
+{% block content %}
+<h1>Are you sure you want to delete Request: {{ request.title }}</h1>
+<p>Once you click delete, the data of the request and the feedback will be gone, user cannot see their own request</p>
+<table>
+    <th style="width: 100px;"><a class="button" href="{% url 'admin-request-detail' request.id %}">Cancel</a></th>
+    <th style="width: 150px;">
+        <form method="POST">
+            {% csrf_token %}
+            <button class="button" type="submit">Delete</button>
+        </form>
+    </th>
+</table>
+
+{% endblock content %}

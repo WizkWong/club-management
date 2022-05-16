@@ -2,7 +2,11 @@
 {% block content %}
 <div class="container">
 <br>
-<a class="button" href="{% url 'admin-request' %}">Back</a>
+    {% if request.request_feedback.approval != 2 %}
+        <a class="button" href="{% url 'admin-request-feedback' %}">Back</a>
+    {% else %}
+        <a class="button" href="{% url 'admin-request' %}">Back</a>
+    {% endif %}
 <br><br>
 <h3>{{ request.title }}</h3>
 <br>
@@ -21,5 +25,11 @@ request by {{ request.user }}
         </fieldset>
             <button type="submit">Reply</button>
     </form>
+    <br>
+    {% if request.request_feedback.approval != 2 %}
+        <a class="button" href="{% url 'admin-request-delete' request.id %}">Delete</a>
+    {% endif %}
 </div>
+<br>
+
 {% endblock %}

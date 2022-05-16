@@ -2,6 +2,10 @@
 {% block content %}
 <h3>All User Request</h3>
 <br>
+<a href="{% url 'admin-request' %}">View User Request</a>
+<a href="{% url 'admin-request-feedback' %}">View Request Feedback</a>
+<br>
+<br>
 {% for request in requests %}
     <a href="{% url 'admin-request-detail' request.id %}">
         {{ request.datetime_created|date:"d F Y P" }}
@@ -10,6 +14,13 @@
         <br>
         request by {{ request.user }}
         <br>
+        {% if request.request_feedback.approval == 1 %}
+        Accepted
+        <br>
+        {% elif request.request_feedback.approval == 0 %}
+        Rejected
+        <br>
+        {% endif %}
     </a>
 <br>
 <br>

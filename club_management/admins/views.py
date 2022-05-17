@@ -189,7 +189,7 @@ def manage_reject_request(request):
 
 
 @login_required
-def view_request_detail(request, pk):
+def view_request_detail(request, types, pk):
     user_request = get_object_or_404(User_request, id=pk)
     permission(request)
     if request.method == 'POST':
@@ -209,13 +209,14 @@ def view_request_detail(request, pk):
     content = {
         'title': 'Manage Request',
         'request': user_request,
-        'form': form
+        'form': form,
+        'type': types
     }
     return render(request, 'admins/manage request/user request detail.html', content)
 
 
 @login_required
-def delete_request(request, pk):
+def delete_request(request, types, pk):
     user_request = get_object_or_404(User_request, id=pk)
     permission(request)
     if request.method == 'POST':
@@ -225,7 +226,8 @@ def delete_request(request, pk):
 
     content = {
         'title': 'Delete Request',
-        'request': user_request
+        'request': user_request,
+        'type': types
     }
 
     return render(request, 'admins/manage request/delete request.html', content)

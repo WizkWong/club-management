@@ -20,22 +20,18 @@
 ">
 
     <a href="{% url 'admin-request-detail' type request.id %}">
-        {{ request.datetime_created|date:"d F Y P" }}
-        <br>
-        {{ request.title }}
-        <br>
-        request by {{ request.user }}
-        <br>
+        <div class="title">{{ request.title }}</div>
+        <div class="user">request by {{ request.user }}</div>
+        <div class="time">{{ request.datetime_created|date:"d F Y P" }}</div>
+        <div class="approval">
         {% if request.request_feedback.approval == 1 %}
-        Accepted
-        <br>
+            <p>Accepted</p>
         {% elif request.request_feedback.approval == 0 %}
-        Rejected
-        <br>
+            <p>Rejected</p>
         {% elif request.request_feedback.approval == 2 %}
-        Pending
-        <br>
+            <p>Pending</p>
         {% endif %}
+        </div>
     </a>
 <br>
 </div>

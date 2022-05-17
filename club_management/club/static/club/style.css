@@ -148,7 +148,6 @@ ul.header{
 .header li{
     list-style-type: none;
     float: left;
-    margin: 0px 5px 5px;
 }
 
 .selectBox {
@@ -175,12 +174,52 @@ ul.header{
 .rectangleBox {
     position: relative;
     width: 100%;
+    min-height: 50px;
     box-shadow: 3px 3px #E8E8E8;
     border-radius: 10px;
     margin: 0px 0px 10px;
 }
 
 .rectangleBox a {
+    display: block;
     color: black;
     text-decoration: none;
+    margin-left: 10px;
 }
+
+.rectangleBox .title {
+    display: block;
+    font-size: 20px;
+    padding: 10px 0px 15px;
+}
+
+.rectangleBox .user {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.rectangleBox .time {
+    display: block;
+    position: absolute;
+    font-size: 14px;
+    left: 10px;
+    bottom: 5px;
+}
+
+.rectangleBox .approval {
+    display: block;
+    position: absolute;
+    font-size: 20px;
+    right: 10px;
+    top: 20%;
+    bottom: 80%;
+}
+
+.detailBox {
+    border: 1px solid;
+    padding: 5px;
+    font-size: 14px;
+    min-height: 150px;
+}
+

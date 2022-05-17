@@ -12,14 +12,14 @@
         <a class="button" href="{% url 'admin-request-reject' %}">Back</a>
     {% endif %}
 <br><br>
-<h3>{{ request.title }}</h3>
+    <ul class="header">
+        <li style="font-weight: bold; font-size: 22px;">{{ request.title }}</li>
+        <li style="float: right">{{ request.datetime_created|date:"d F Y P" }}</li>
+    </ul>
 <br>
-{{ request.datetime_created|date:"d F Y P" }}
-<br>
-{{ request.detail }}
-<br>
-request by {{ request.user }}
-<br>
+    <p>request by {{ request.user }}</p>
+    <div style="font-size:18px; margin-bottom: 5px;">Description:</div>
+    <div class="detailBox">{{ request.detail }}</div>
 <br>
     <form method="POST">
         {% csrf_token %}
@@ -30,10 +30,8 @@ request by {{ request.user }}
             <button type="submit">Reply</button>
     </form>
     <br>
-    {% if request.request_feedback.approval != 2 %}
-        <a class="button" href="{% url 'admin-request-delete' type request.id %}">Delete</a>
-    {% endif %}
+    <a class="button" href="{% url 'admin-request-delete' type request.id %}">Delete</a>
 </div>
-<br>
+<br><br>
 
 {% endblock %}

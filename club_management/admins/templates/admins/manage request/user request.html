@@ -19,7 +19,7 @@
     {% endif %}
 ">
 
-    <a href="{% url 'admin-request-detail' request.id %}">
+    <a href="{% url 'admin-request-detail' type request.id %}">
         {{ request.datetime_created|date:"d F Y P" }}
         <br>
         {{ request.title }}

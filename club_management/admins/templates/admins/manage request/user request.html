@@ -21,7 +21,7 @@
 
     <a href="{% url 'admin-request-detail' type request.id %}">
         <div class="title">{{ request.title }}</div>
-        <div class="user">request by {{ request.user }}</div>
+        <div class="shortText">request by {{ request.user }}</div>
         <div class="time">{{ request.datetime_created|date:"d F Y P" }}</div>
         <div class="approval">
         {% if request.request_feedback.approval == 1 %}

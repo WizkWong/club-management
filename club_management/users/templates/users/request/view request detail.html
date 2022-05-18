@@ -3,10 +3,34 @@
 <br>
 <a class="button" href="{% url 'user-request' %}">Back</a>
 <br><br>
-<h3>{{ request.title }}</h3>
-<p>{{ request.detail }}</p>
-<small>{{ request.datetime_created|date:"d F Y P" }}</small>
-<br><br>
+    <ul class="header">
+        <li style="font-weight: bold; font-size: 22px;">{{ request.title }}</li>
+        <li style="float: right">{{ request.datetime_created|date:"d F Y P" }}</li>
+    </ul>
+<br>
+    <p>request by {{ request.user }}</p>
+    <div style="font-size:18px; margin-bottom: 5px;">Description:</div>
+    <div class="detailBox">{{ request.detail }}</div>
+<br>
+<h3>Your Feedback</h3>
+<div style="display: box; margin: 20px 0px; font-size: 16px;">
+    Approval:
+    {% if request.request_feedback.approval == 1 %}
+        Accepted
+    {% elif request.request_feedback.approval == 0 %}
+        Rejected
+    {% elif request.request_feedback.approval == 2 %}
+        Pending
+    {% endif %}
+</div>
+
+<div style="font-size:18px; margin-bottom: 5px;">Description:</div>
+{% if request.request_feedback.feedback %}
+    <div class="detailBox">{{ request.request_feedback.feedback }}</div>
+{% else %}
+    Currently No Feedback
+    <br>
+{% endif %}
 <br><br>
 <a class="button" href="{% url 'user-request-delete' request.id %}">Delete</a>
 {% endblock %}

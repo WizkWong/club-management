@@ -10,6 +10,9 @@
     {% endif %}
     <li><a class="nav {% if title == 'Home' %}select{% endif %}" href="{% url 'club-home'%}">Home</a></li>
     <li><a class="nav {% if title == 'Event' %}select{% endif %}">Event</a></li>
+    {% if user.is_authenticated %}
+    <li><a class="nav {% if title == 'Chat' %}select{% endif %}">Chat</a></li>
+    {% endif %}
     <li><a class="nav {% if title == 'About' %}select{% endif %}" href="{% url 'club-about'%}">About</a></li>
     {% if user.is_authenticated %}
     <li class="dropdown">

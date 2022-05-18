@@ -7,8 +7,7 @@
         <li style="font-weight: bold; font-size: 22px;">{{ request.title }}</li>
         <li style="float: right">{{ request.datetime_created|date:"d F Y P" }}</li>
     </ul>
-<br>
-    <p>request by {{ request.user }}</p>
+<br><br>
     <div style="font-size:18px; margin-bottom: 5px;">Description:</div>
     <div class="detailBox">{{ request.detail }}</div>
 <br>

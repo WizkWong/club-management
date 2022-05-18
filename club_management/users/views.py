@@ -93,7 +93,7 @@ def view_task(request):
     content = {
         'title': 'User Task'
     }
-    return render(request, 'users/task.html', content)
+    return render(request, 'users/task/task.html', content)
 
 
 @login_required

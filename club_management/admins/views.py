@@ -33,7 +33,7 @@ def manage_task(request):
     content = {
         'title': 'Manage Task'
     }
-    return render(request, 'admins/task.html', content)
+    return render(request, 'admins/manage task/task.html', content)
 
 
 @login_required
@@ -239,7 +239,7 @@ def manage_report(request):
     content = {
         'title': 'Manage Report'
     }
-    return render(request, 'admins/report.html', content)
+    return render(request, 'admins/manage report/report.html', content)
 
 
 @login_required

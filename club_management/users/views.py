@@ -90,6 +90,7 @@ def profile(request):
 
 @login_required
 def view_task(request):
+    permission(request, request.user)
     content = {
         'title': 'User Task'
     }
@@ -158,6 +159,7 @@ def delete_request(request, pk):
 
 @login_required
 def view_attendance(request):
+    permission(request, request.user)
     content = {
         'title': 'User Attendance'
     }

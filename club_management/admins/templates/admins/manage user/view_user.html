@@ -10,7 +10,8 @@
         <tr>
             <th>Username</th>
             <th>Email</th>
-            <th>Description</th>
+            <th style="width: 50%;">Description</th>
+            <th style="width: 120px;">Profile Picture</th>
             <th></th>
             <th></th>
         </tr>
@@ -23,6 +24,7 @@
             {% else %}
             <td style="text-align:center;">&#8212</td>
             {% endif %}
+            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
             <td style="width: 70px; height: 50px;">
                 <a href="{% url 'admin-user-edit' u.username %}">Edit</a>
             </td>

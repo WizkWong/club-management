@@ -140,21 +140,20 @@ def delete_user(request, pk):
 @login_required
 def manage_request(request, types):
     permission(request)
+    search = request.GET.get('search') if request.GET.get('search') is not None else ''
+    objects = User_request.objects.all().filter(title__contains=search).order_by('-datetime_created')
 
     if types == 'all':
-        requests = User_request.objects.all().order_by('-datetime_created')
+        requests = objects
 
     elif types == 'pending':
-        requests = [r for r in User_request.objects.all().order_by('-datetime_created') if
-                    r.request_feedback.approval == Request_feedback.PENDING]
+        requests = [r for r in objects if r.request_feedback.approval == Request_feedback.PENDING]
 
     elif types == 'accept':
-        requests = [r for r in User_request.objects.all().order_by('-datetime_created') if
-                    r.request_feedback.approval == Request_feedback.ACCEPT]
+        requests = [r for r in objects if r.request_feedback.approval == Request_feedback.ACCEPT]
 
     elif types == 'reject':
-        requests = [r for r in User_request.objects.all().order_by('-datetime_created') if
-                    r.request_feedback.approval == Request_feedback.REJECT]
+        requests = [r for r in objects if r.request_feedback.approval == Request_feedback.REJECT]
 
     else:
         raise Http404("Page not found")
@@ -162,7 +161,8 @@ def manage_request(request, types):
     content = {
         'title': 'Manage Request',
         'type': types,
-        'requests': requests
+        'requests': requests,
+        'search': search
     }
     return render(request, 'admins/manage request/user request.html', content)
 

@@ -223,3 +223,11 @@ ul.header{
     min-height: 150px;
 }
 
+.searchBar {
+    border: 1px solid;
+    margin-bottom: 15px;
+    font-size: 16px;
+    min-width: 25%;
+    height: 25px;
+}
+

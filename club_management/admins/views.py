@@ -39,9 +39,10 @@ def manage_task(request):
 @login_required
 def manage_user(request):
     permission(request)
+    search = request.GET.get('search') if request.GET.get('search') is not None else ''
     content = {
         'title': 'Manage User',
-        'all_user': User.objects.filter(is_superuser=False)
+        'all_user': User.objects.filter(is_superuser=False).filter(username__startswith=search)
     }
     return render(request, 'admins/manage user/view_user.html', content)
 
@@ -141,7 +142,7 @@ def delete_user(request, pk):
 def manage_request(request, types):
     permission(request)
     search = request.GET.get('search') if request.GET.get('search') is not None else ''
-    objects = User_request.objects.all().filter(title__contains=search).order_by('-datetime_created')
+    objects = User_request.objects.all().filter(title__icontains=search).order_by('-datetime_created')
 
     if types == 'all':
         requests = objects

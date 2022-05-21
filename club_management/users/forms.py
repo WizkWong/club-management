@@ -8,7 +8,7 @@ from .models import (
 
 
 class UserRegisterForm(UserCreationForm):
-    username = forms.CharField(help_text='Required 6-30 character',
+    username = forms.CharField(help_text='Required 6-30 character and No spacing allowed',
                                max_length=30,
                                min_length=6,
                                widget=forms.TextInput(attrs={'size': 20}))
@@ -20,7 +20,7 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    username = forms.CharField(help_text='Required 6-30 character',
+    username = forms.CharField(help_text='Required 6-30 character and No spacing allowed',
                                max_length=30,
                                min_length=6,
                                widget=forms.TextInput(attrs={'size': 20}))

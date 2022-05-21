@@ -2,15 +2,7 @@
 {% block content %}
 <div class="container">
 <br>
-    {% if type == 'all' %}
-        <a class="button" href="{% url 'admin-request' %}">Back</a>
-    {% elif type == 'pending' %}
-        <a class="button" href="{% url 'admin-request-pending' %}">Back</a>
-    {% elif type == 'accept' %}
-        <a class="button" href="{% url 'admin-request-accept' %}">Back</a>
-    {% elif type == 'reject' %}
-        <a class="button" href="{% url 'admin-request-reject' %}">Back</a>
-    {% endif %}
+    <a class="button" href="{% url 'admin-request' type %}">Back</a>
 <br><br>
     <ul class="header">
         <li style="font-weight: bold; font-size: 22px;">{{ request.title }}</li>

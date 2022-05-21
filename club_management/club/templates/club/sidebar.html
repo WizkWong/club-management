@@ -3,7 +3,7 @@
     <a class="{% if title == 'Manage Attendance' %}select{% endif %}" href="{% url 'admin-attendance' %}">Attendance</a>
     <a class="{% if title == 'Manage Task' %}select{% endif %}" href="{% url 'admin-task' %}">Task</a>
     <a class="{% if title == 'Manage User' %}select{% endif %}" href="{% url 'admin-user'%}">User</a>
-    <a class="{% if title == 'Manage Request' %}select{% endif %}" href="{% url 'admin-request' %}">Request</a>
+    <a class="{% if title == 'Manage Request' %}select{% endif %}" href="{% url 'admin-request' 'all' %}">Request</a>
     <a class="{% if title == 'Manage Report' %}select{% endif %}" href="{% url 'admin-report' %}">Report</a>
     <a class="{% if title == 'Edit Page' %}select{% endif %}" href="{% url 'admin-edit-page' %}">Edit Page</a>
     {% else %}

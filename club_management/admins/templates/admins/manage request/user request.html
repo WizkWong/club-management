@@ -3,10 +3,10 @@
 <h3>All User Request</h3>
 <br>
 <div class="selectBox">
-    <a class="{% if type == 'all' %}select{% endif %}" href="{% url 'admin-request' %}">All</a>
-    <a class="{% if type == 'pending' %}select{% endif %}" href="{% url 'admin-request-pending' %}">Pending</a>
-    <a class="{% if type == 'accept' %}select{% endif %}" href="{% url 'admin-request-accept' %}">Accept</a>
-    <a class="{% if type == 'reject' %}select{% endif %}" href="{% url 'admin-request-reject' %}">Reject</a>
+    <a class="{% if type == 'all' %}select{% endif %}" href="{% url 'admin-request' 'all' %}">All</a>
+    <a class="{% if type == 'pending' %}select{% endif %}" href="{% url 'admin-request' 'pending' %}">Pending</a>
+    <a class="{% if type == 'accept' %}select{% endif %}" href="{% url 'admin-request' 'accept' %}">Accept</a>
+    <a class="{% if type == 'reject' %}select{% endif %}" href="{% url 'admin-request' 'reject' %}">Reject</a>
 </div>
 {% for request in requests %}
 <div class="rectangleBox" style="

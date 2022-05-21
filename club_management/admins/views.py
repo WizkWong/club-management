@@ -42,7 +42,8 @@ def manage_user(request):
     search = request.GET.get('search') if request.GET.get('search') is not None else ''
     content = {
         'title': 'Manage User',
-        'all_user': User.objects.filter(is_superuser=False).filter(username__startswith=search)
+        'all_user': User.objects.filter(is_superuser=False).filter(username__startswith=search),
+        'search': search
     }
     return render(request, 'admins/manage user/view_user.html', content)
 

@@ -4,7 +4,11 @@
     <li style="margin-left: 5px;">All Users</li>
     <li style="float: right;"><a href="{% url 'admin-user-add' %}">Add</a></li>
 </ul>
-<br><br>
+<br>
+<form method="GET" action="{% url 'admin-user' %}">
+    <label></label><input class="searchBar"  type="text" name="search" value="{{ search }}" placeholder="search username">
+    <input class="button" type="submit" value="Search">
+</form>
 <div style="overflow-x: auto;">
     <table class="table">
         <tr>

@@ -138,52 +138,31 @@ def delete_user(request, pk):
 
 
 @login_required
-def manage_all_request(request):
+def manage_request(request, types):
     permission(request)
+
+    if types == 'all':
+        requests = User_request.objects.all().order_by('-datetime_created')
+
+    elif types == 'pending':
+        requests = [r for r in User_request.objects.all().order_by('-datetime_created') if
+                    r.request_feedback.approval == Request_feedback.PENDING]
+
+    elif types == 'accept':
+        requests = [r for r in User_request.objects.all().order_by('-datetime_created') if
+                    r.request_feedback.approval == Request_feedback.ACCEPT]
+
+    elif types == 'reject':
+        requests = [r for r in User_request.objects.all().order_by('-datetime_created') if
+                    r.request_feedback.approval == Request_feedback.REJECT]
+
+    else:
+        raise Http404("Page not found")
 
     content = {
         'title': 'Manage Request',
-        'type': 'all',
-        'requests': User_request.objects.all().order_by('-datetime_created')
-    }
-    return render(request, 'admins/manage request/user request.html', content)
-
-
-@login_required
-def manage_pending_request(request):
-    permission(request)
-
-    content = {
-        'title': 'Manage Request',
-        'type': 'pending',
-        'requests': [r for r in User_request.objects.all().order_by('-datetime_created') if
-                     r.request_feedback.approval == Request_feedback.PENDING]
-    }
-    return render(request, 'admins/manage request/user request.html', content)
-
-
-@login_required
-def manage_accept_request(request):
-    permission(request)
-
-    content = {
-        'title': 'Manage Request',
-        'type': 'accept',
-        'requests': [r for r in User_request.objects.all().order_by('-datetime_created') if
-                     r.request_feedback.approval == Request_feedback.ACCEPT]
-    }
-    return render(request, 'admins/manage request/user request.html', content)
-
-
-@login_required
-def manage_reject_request(request):
-    permission(request)
-
-    content = {
-        'title': 'Manage Request',
-        'type': 'reject',
-        'requests': [r for r in User_request.objects.all().order_by('-datetime_created') if
-                     r.request_feedback.approval == Request_feedback.REJECT]
+        'type': types,
+        'requests': requests
     }
     return render(request, 'admins/manage request/user request.html', content)
 
@@ -201,7 +180,7 @@ def view_request_detail(request, types, pk):
             form.user = request.user
             form.save()
             messages.success(request, f'Reply the request of Title:"{pk}" successfully')
-            return redirect('admin-request')
+            return redirect('admin-request', types=types)
 
     else:
         form = RequestFeedbackForm(instance=user_request.request_feedback)
@@ -220,9 +199,9 @@ def delete_request(request, types, pk):
     user_request = get_object_or_404(User_request, id=pk)
     permission(request)
     if request.method == 'POST':
-        User.objects.filter(id=pk).delete()
+        User_request.objects.filter(id=pk).delete()
         messages.success(request, f'{user_request.title} request is successfully delete!')
-        return redirect('admin-request-feedback')
+        return redirect('admin-request', types=types)
 
     content = {
         'title': 'Delete Request',

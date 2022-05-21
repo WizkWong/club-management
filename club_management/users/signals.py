@@ -1,14 +1,24 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from .models import profile, User_request
 from admins.models import Request_feedback
+import os
 
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
         profile.objects.create(user=instance)
+
+
+@receiver(pre_delete, sender=User)
+def delete_profile(sender, instance, **kwargs):
+    if instance.profile.image == 'default.jpg':
+        return
+    else:
+        if os.path.exists(f'media/{instance.profile.image}'):
+            os.remove(f'media/{instance.profile.image}')
 
 
 # @receiver(post_save, sender=User)

@@ -1,11 +1,11 @@
 {% extends "club/base.html"%}
 {% block content %}
 <ul class="header">
-    <li style="margin-left: 5px;">All Users</li>
+    <li class="title">All Users</li>
     <li style="float: right;"><a href="{% url 'admin-user-add' %}">Add</a></li>
 </ul>
 <br>
-<form method="GET" action="{% url 'admin-user' %}">
+<form style="margin-top: 5px;" method="GET" action="{% url 'admin-user' %}">
     <label></label><input class="searchBar" type="text" name="search" value="{{ search }}" placeholder="search username">
     <input class="button" type="submit" value="Search">
 </form>

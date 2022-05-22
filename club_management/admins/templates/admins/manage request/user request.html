@@ -1,6 +1,6 @@
 {% extends "club/base.html"%}
 {% block content %}
-<h3>All User Request</h3>
+<div class="title">All User Request</div>
 <form method="GET" action="{% url 'admin-request' type %}">
     <label></label><input class="searchBar" type="text" name="search" value="{{ search }}" placeholder="search request title">
     <input class="button" type="submit" value="Search">
@@ -22,9 +22,8 @@
         background-color: #FFFF00;
     {% endif %}
 ">
-
     <a href="{% url 'admin-request-detail' type request.id %}">
-        <div class="title">{{ request.title }}</div>
+        <div class="requestTitle">{{ request.title }}</div>
         <div class="shortText">request by {{ request.user }}</div>
         <div class="time">{{ request.datetime_created|date:"d F Y P" }}</div>
         <div class="approval">

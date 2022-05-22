@@ -64,6 +64,7 @@ class Report(models.Model):
         (EVENT, 'Event')
     }
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=100)
     type = models.CharField(max_length=3, choices=TYPE)
     content = models.TextField(null=True)

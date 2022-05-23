@@ -6,7 +6,7 @@
 {% for request in requests %}
 <div class="rectangleBox" style="background-color:#E8E8E8;">
     <a href="{% url 'user-request-detail' request.id %}">
-        <div class="title">{{ request.title }}</div>
+        <div class="titleBox">{{ request.title }}</div>
         <div class="shortText">
             {% if request.request_feedback.approval == 1 %}
                 Your Request Accepted

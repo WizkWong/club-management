@@ -6,8 +6,8 @@
 {% for request in requests %}
 <div class="rectangleBox" style="background-color:#E8E8E8;">
     <a href="{% url 'user-request-detail' request.id %}">
-        <div class="titleBox">{{ request.title }}</div>
-        <div class="shortText">
+        <div class="rectangleBoxTitle">{{ request.title }}</div>
+        <div class="rectangleBoxShortText">
             {% if request.request_feedback.approval == 1 %}
                 Your Request Accepted
             {% elif request.request_feedback.approval == 0 %}
@@ -19,7 +19,7 @@
             {% endif %}
         </div>
         <br>
-        <div class="time">{{ request.datetime_created|date:"d F Y P" }}</div>
+        <div class="rectangleBoxTime">{{ request.datetime_created|date:"d F Y P" }}</div>
     </a>
 </div>
 {% endfor %}

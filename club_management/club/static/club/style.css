@@ -187,19 +187,19 @@ ul.header{
     margin-left: 10px;
 }
 
-.rectangleBox .titleBox {
+.rectangleBoxTitle {
     display: block;
     font-size: 20px;
     padding: 10px 0px 15px;
 }
 
-.rectangleBox .shortText {
+.rectangleBoxShortText {
     display: block;
     font-size: 16px;
     margin-bottom: 10px;
 }
 
-.rectangleBox .time {
+.rectangleBoxTime {
     display: block;
     position: absolute;
     font-size: 14px;
@@ -207,7 +207,7 @@ ul.header{
     bottom: 5px;
 }
 
-.rectangleBox .approval {
+.rectangleBoxApproval {
     display: block;
     position: absolute;
     font-size: 20px;

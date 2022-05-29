@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm
 from users.models import User_request
 from .models import Request_feedback, Event
-from .forms import RequestFeedbackForm
+from .forms import RequestFeedbackForm, TaskForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -34,6 +34,29 @@ def manage_task(request):
         'title': 'Manage Task'
     }
     return render(request, 'admins/manage task/task.html', content)
+
+
+@login_required
+def create_task(request):
+    permission(request)
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.save()
+            messages.success(request, 'New Task Created')
+            return redirect('admin-task')
+
+    else:
+        form = TaskForm()
+
+    content = {
+        'title': 'Manage Task',
+        'form': form
+    }
+    return render(request, 'admins/manage task/create task.html', content)
 
 
 @login_required

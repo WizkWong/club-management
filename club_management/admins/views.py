@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm
 from users.models import User_request
-from .models import Request_feedback
+from .models import Request_feedback, Event
 from .forms import RequestFeedbackForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
@@ -143,7 +143,7 @@ def delete_user(request, pk):
 def manage_request(request, types):
     permission(request)
     search = request.GET.get('search') if request.GET.get('search') is not None else ''
-    objects = User_request.objects.all().filter(title__icontains=search).order_by('-datetime_created')
+    objects = User_request.objects.filter(title__icontains=search).order_by('-datetime_created')
 
     if types == 'all':
         requests = objects
@@ -217,8 +217,10 @@ def delete_request(request, types, pk):
 @login_required
 def manage_report(request):
     permission(request)
+
     content = {
-        'title': 'Manage Report'
+        'title': 'Manage Report',
+        'events': Event.objects.all()
     }
     return render(request, 'admins/manage report/report.html', content)
 

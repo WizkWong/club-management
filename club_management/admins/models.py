@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Event(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     datetime_created = models.DateTimeField(default=timezone.now)
+    title = models.CharField(max_length=100)
     detail = models.TextField(null=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -32,6 +33,7 @@ class Attendance_of_user(models.Model):
 class Task(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     datetime_created = models.DateTimeField(default=timezone.now)
+    title = models.CharField(max_length=100)
     detail = models.TextField(null=True)
     deadline = models.DateTimeField()
 

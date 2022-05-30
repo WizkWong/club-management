@@ -8,23 +8,47 @@
         {% csrf_token %}
         <fieldset>
             <legend>Create New Task</legend>
+            <br>
             {{ form.as_p }}
-            <table>
+            <div>Assigned Task to Member</div>
+            <table class="table" style="width:30%; float:left;">
                 <tr>
-                    <th>Member</th>
-                    <th>Assigned</th>
+                    <th style="font-size:16px;">Member</th>
+                    <th style="width:100px; text-align:center; font-size:16px;">Assigned</th>
                 </tr>
                 {% for user in all_user %}
                 <tr>
-                    <td>{{ user.username }}</td>
-                    <td>
-                        <input type="checkbox" value="{{ user.id }}" name="users">
+                    <td style="font-size:16px;">{{ user.username }}</td>
+                    <td style="text-align:center;">
+                        <input style="width:20px; height:20px; padding:100px;"
+                               type="checkbox" value="{{ user.id }}" name="users">
                     </td>
                 </tr>
                 {% endfor %}
             </table>
+            <button type="button" style="width:125px; padding:8px 0px; margin: 5px;" onclick="selectAll()">
+                <div id="select">Select All</div>
+            </button>
         </fieldset>
             <button type="submit">Create</button> <br>
     </form>
 </div>
+
+<script>
+    function selectAll() {
+        var status = document.getElementById("select").innerHTML;
+        checkboxes = document.getElementsByName('users');
+        if (status == "Select All") {
+            for(var checkbox of checkboxes) {
+                checkbox.checked = true;
+                document.getElementById("select").innerHTML = "Deselect All";
+            }
+        } else if (status == "Deselect All") {
+            for(var checkbox of checkboxes) {
+                checkbox.checked = false;
+                document.getElementById("select").innerHTML = "Select All";
+            }
+        }
+    }
+</script>
 {% endblock content %}

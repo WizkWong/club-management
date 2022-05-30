@@ -39,10 +39,6 @@ class Task(models.Model):
 
 
 class Request_feedback(models.Model):
-    """
-    do not use "from users.models import User_request", below a line from "User_request" to "users.User_request" to
-    avoid the circular import error
-    """
     PENDING = 2
     ACCEPT = 1
     REJECT = 0
@@ -52,6 +48,10 @@ class Request_feedback(models.Model):
         (ACCEPT, 'Accept'),
         (REJECT, 'Reject')
     }
+    """
+    do not use "from users.models import User_request" for the request one to one field to
+    avoid the circular import error
+    """
     request = models.OneToOneField('users.User_request', on_delete=models.CASCADE, primary_key=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     approval = models.IntegerField(choices=APPROVAL, default=PENDING)

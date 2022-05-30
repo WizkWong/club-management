@@ -29,4 +29,4 @@ def delete_profile(sender, instance, **kwargs):
 @receiver(post_save, sender=User_request)
 def create_request_feedback(sender, instance, created, **kwargs):
     if created:
-        Request_feedback.objects.create(request_id=instance.id, user=instance.user)
+        Request_feedback.objects.create(request=instance, user=instance.user)

@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm
-from users.models import User_request
+from users.models import User_request, Task_assigned
 from .models import Request_feedback, Event
 from .forms import RequestFeedbackForm, TaskForm
 from django.contrib.auth.forms import PasswordChangeForm
@@ -45,7 +45,11 @@ def create_task(request):
         if form.is_valid():
             form = form.save(commit=False)
             form.user = request.user
-            form.save()
+            task = form.save()
+            print(task.pk)
+            # user_list = [User.objects.get(id=user_id) for user_id in request.POST.getlist('users')]
+            # for user in user_list:
+            #     Task_assigned.objects.create(task=task.id, user=user)
             messages.success(request, 'New Task Created')
             return redirect('admin-task')
 
@@ -54,7 +58,8 @@ def create_task(request):
 
     content = {
         'title': 'Manage Task',
-        'form': form
+        'form': form,
+        'all_user': User.objects.filter(is_superuser=False)
     }
     return render(request, 'admins/manage task/create task.html', content)
 

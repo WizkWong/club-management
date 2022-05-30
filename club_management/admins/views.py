@@ -43,13 +43,12 @@ def create_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form = form.save(commit=False)
-            form.user = request.user
-            task = form.save()
-            print(task.pk)
-            # user_list = [User.objects.get(id=user_id) for user_id in request.POST.getlist('users')]
-            # for user in user_list:
-            #     Task_assigned.objects.create(task=task.id, user=user)
+            task = form.save(commit=False)
+            task.user = request.user
+            task.save()
+            user_list = [User.objects.get(id=user_id) for user_id in request.POST.getlist('users')]
+            for user in user_list:
+                Task_assigned.objects.create(task=task, user=user)
             messages.success(request, 'New Task Created')
             return redirect('admin-task')
 

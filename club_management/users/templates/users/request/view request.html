@@ -1,6 +1,6 @@
 {% extends "club/base.html"%}
 {% block content %}
-<h2><bold>Your Request</bold></h2>
+<h2>Your Request</h2>
 <a class="button" href="{% url 'user-request-create' %}">Create Request</a>
 <br><br><br>
 {% for request in requests %}

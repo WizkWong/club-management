@@ -146,7 +146,7 @@ def delete_request(request, pk):
     user_request = get_object_or_404(User_request, id=pk)
     permission(request, user_request.user)
     if request.method == 'POST':
-        User_request.objects.filter(id=pk).delete()
+        User_request.objects.get(id=pk).delete()
         messages.success(request, f'{user_request.title} request is successfully delete!')
         return redirect('user-request')
 

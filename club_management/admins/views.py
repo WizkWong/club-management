@@ -127,7 +127,7 @@ def delete_user(request, pk):
     user = get_object_or_404(User, Q(is_superuser=False), username=pk)
     permission(request)
     if request.method == 'POST':
-        User.objects.filter(username=user.username).delete()
+        User.objects.get(username=user.username).delete()
         messages.success(request, f'{user.username} account is successfully delete!')
         return redirect('admin-user')
 
@@ -201,7 +201,7 @@ def delete_request(request, types, pk):
     user_request = get_object_or_404(User_request, id=pk)
     permission(request)
     if request.method == 'POST':
-        User_request.objects.filter(id=pk).delete()
+        User_request.objects.get(id=pk).delete()
         messages.success(request, f'{user_request.title} request is successfully delete!')
         return redirect('admin-request', types=types)
 

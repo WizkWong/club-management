@@ -87,7 +87,7 @@ def change_password(request, pk):
         if form.is_valid():
             user_pss = form.save()
             update_session_auth_hash(request, user_pss)
-            messages.success(request, f'Account {pk} password was successfully change!')
+            messages.success(request, f'Account {user.username} password was successfully change!')
             return redirect('admin-user')
 
     else:
@@ -181,7 +181,7 @@ def view_request_detail(request, types, pk):
             form.request_id = user_request.id
             form.user = request.user
             form.save()
-            messages.success(request, f'Reply the request of Title:"{pk}" successfully')
+            messages.success(request, f'Reply the request of Title:"{user_request.title}" successfully')
             return redirect('admin-request', types=types)
 
     else:

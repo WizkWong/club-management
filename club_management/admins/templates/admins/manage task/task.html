@@ -4,5 +4,29 @@
 <br>
 <a class="button" href="{% url 'admin-task-create' %}">Create Task</a>
 <br><br><br>
-
+{% for task, number in tasks %}
+<div class="rectangleBox" style="background-color:#E8E8E8;">
+    <a href="">
+        <div class="rectangleBoxTitle">{{ task.title }}</div>
+        <div class="rectangleBoxShortText" style="color: red;">Deadline: {{ task.deadline|date:"d F Y, P" }}</div>
+        <br>
+        <div class="rectangleBoxTime">{{ task.datetime_created|date:"d F Y P" }}</div>
+        <div style="
+            display: block;
+            position: absolute;
+            font-size: 20px;
+            right: 10px;
+            top: 40%;
+            font-weight: bold;
+            {% if number.percentage >= 80 %}
+            color: #14C22C;
+            {% elif number.percentage < 50 %}
+            color: red;
+            {% endif %}
+        ">
+            {{ number.total_completes }}/{{ number.total }}&nbsp&nbsp&nbsp&nbsp{{ number.percentage }}%
+        </div>
+    </a>
+</div>
+{% endfor %}
 {% endblock content %}

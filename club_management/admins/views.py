@@ -6,11 +6,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm
 from users.models import User_request, Task_assigned
-from .models import Request_feedback, Event
+from .models import Request_feedback, Event, Task
 from .forms import RequestFeedbackForm, TaskForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from .method import UserTaskPercentage
 
 
 def permission(request):
@@ -30,8 +31,15 @@ def manage_attendance(request):
 @login_required
 def manage_task(request):
     permission(request)
+    tasks = Task.objects.all().order_by('-datetime_created')
+    number_completion = []
+    for task in tasks:
+        n = [user_task.complete for user_task in Task_assigned.objects.filter(task=task.id)]
+        number_completion.append(UserTaskPercentage(n.count(True), len(n)))
+
     content = {
-        'title': 'Manage Task'
+        'title': 'Manage Task',
+        'tasks': zip(tasks, number_completion)
     }
     return render(request, 'admins/manage task/task.html', content)
 
@@ -208,7 +216,7 @@ def view_request_detail(request, types, pk):
             form.request_id = user_request.id
             form.user = request.user
             form.save()
-            messages.success(request, f'Reply the request of Title:"{pk}" successfully')
+            messages.success(request, f'Reply the request of Title: "{user_request.title}" successfully')
             return redirect('admin-request', types=types)
 
     else:

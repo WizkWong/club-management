@@ -34,7 +34,8 @@
             {% endif %}
 
             {% if assign.upload_file %}
-                <td style="text-align:center;"><a class="" href="club_management/media/{{ assign.upload_file }}" download>{{ assign.upload_file }}</a></td>
+                {% load static %}
+                <td style="text-align:center;"><a class="" href="{% get_media_prefix %}{{ assign.upload_file }}" download>{{ assign.upload_file|cut:'files/' }}</a></td>
             {% else %}
                 <td style="text-align:center;">&#8212</td>
             {% endif %}

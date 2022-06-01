@@ -102,9 +102,28 @@ def edit_task_detail(request, pk):
     content = {
         'title': 'Manage Task',
         'form': form,
-        'task_id': pk,
+        'task': task,
     }
     return render(request, 'admins/manage task/edit task detail.html', content)
+
+
+@login_required
+def delete_task_detail(request, pk):
+    permission(request)
+    task = get_object_or_404(Task, id=pk)
+
+    if request.method == 'POST':
+        for user_task in Task_assigned.objects.filter(task=task):
+            user_task.delete()
+        Task.objects.get(id=pk).delete()
+        messages.success(request, f'{task.title} request is successfully delete!')
+        return redirect('admin-task')
+
+    content = {
+        'title': 'Manage Task',
+        'task': task,
+    }
+    return render(request, 'admins/manage task/delete task.html', content)
 
 
 @login_required

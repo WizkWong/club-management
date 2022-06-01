@@ -1,0 +1,17 @@
+{% extends "club/base.html"%}
+{% block content %}
+<h1>Are you sure you want to delete Task: {{ task.title }}</h1>
+<p style="font-size: 18px;">
+    If you delete this task, all the task had been assigned to user will be deleted including the files had uploaded
+</p>
+<table>
+    <th style="width: 100px;"><a class="button" href="{% url 'admin-task-detail' task.id %}">Cancel</a></th>
+    <th style="width: 150px;">
+        <form method="POST">
+            {% csrf_token %}
+            <button class="button" type="submit">Delete</button>
+        </form>
+    </th>
+</table>
+
+{% endblock content %}

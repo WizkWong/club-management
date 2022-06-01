@@ -13,8 +13,8 @@
             <div>Assigned Task to Member</div>
             <table class="table" style="width:30%; float:left;">
                 <tr>
-                    <th style="font-size:16px;">Member</th>
-                    <th style="width:100px; text-align:center; font-size:16px;">Assigned</th>
+                    <th>Member</th>
+                    <th style="width:100px; text-align:center;">Assigned</th>
                 </tr>
                 {% for user in all_user %}
                 <tr>
@@ -30,7 +30,8 @@
                 <div id="select">Select All</div>
             </button>
         </fieldset>
-            <button type="submit">Create</button> <br>
+        <button type="submit">Create</button> <br>
+        <small style="color:red;">Warning: Once created, the assigned user cannot be change</small>
     </form>
 </div>
 

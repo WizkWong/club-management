@@ -5,7 +5,7 @@
 <a class="button" href="{% url 'admin-task-create' %}">Create Task</a>
 <br><br><br>
 {% for task, number in tasks %}
-<div class="rectangleBox" style="background-color:#E8E8E8;">
+<div class="rectangleBox" style="background-color:#E8E8E8; z-index: -1;">
     <a href="{% url 'admin-task-detail' task.id %}">
         <div class="rectangleBoxTitle">{{ task.title }}</div>
         <div class="rectangleBoxShortText" style="color: red;">Deadline: {{ task.deadline|date:"d F Y, P" }}</div>

@@ -72,6 +72,42 @@ def create_task(request):
 
 
 @login_required
+def view_task_detail(request, pk):
+    permission(request)
+    task = get_object_or_404(Task, id=pk)
+
+    content = {
+        'title': 'Manage Task',
+        'task': task,
+        'assign_users': Task_assigned.objects.filter(task=task)
+    }
+    return render(request, 'admins/manage task/task detail.html', content)
+
+
+@login_required
+def edit_task_detail(request, pk):
+    permission(request)
+    task = get_object_or_404(Task, id=pk)
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Task title:{task.title} is updated')
+            return redirect('admin-task-detail', pk=pk)
+
+    else:
+        form = TaskForm(instance=task)
+
+    content = {
+        'title': 'Manage Task',
+        'form': form,
+        'task_id': pk,
+    }
+    return render(request, 'admins/manage task/edit task detail.html', content)
+
+
+@login_required
 def manage_user(request):
     permission(request)
     search = request.GET.get('search') if request.GET.get('search') is not None else ''
@@ -216,8 +252,8 @@ def view_request_detail(request, types, pk):
             form.request_id = user_request.id
             form.user = request.user
             form.save()
-            messages.success(request, f'Reply the request of Title:"{user_request.title}" successfully')
-            return redirect('admin-request', types=types)
+            messages.success(request, f'Reply the request of Title: "{user_request.title}" successfully')
+            return redirect('admin-request-detail', types=types, pk=pk)
 
     else:
         form = RequestFeedbackForm(instance=user_request.request_feedback)

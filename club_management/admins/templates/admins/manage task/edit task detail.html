@@ -1,0 +1,18 @@
+{% extends "club/base.html"%}
+{% block content %}
+<div class="container">
+    <br>
+    <a class="button" href="{% url 'admin-task-detail' task_id %}">Back</a>
+    <br><br>
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Edit Task</legend>
+            <br>
+            {{ form.as_p }}
+        </fieldset>
+        <button type="submit">Change</button> <br>
+    </form>
+</div>
+
+{% endblock content %}

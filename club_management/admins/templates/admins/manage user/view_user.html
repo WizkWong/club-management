@@ -30,10 +30,10 @@
             {% endif %}
             <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
             <td style="width: 70px; height: 50px;">
-                <a href="{% url 'admin-user-edit' u.username %}">Edit</a>
+                <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
             </td>
             <td style="width: 90px; height: 50px;">
-                <a href="{% url 'admin-user-delete' u.username%}">Delete</a>
+                <a class="button" href="{% url 'admin-user-delete' u.username%}">Delete</a>
             </td>
         </tr>
         {% endfor %}

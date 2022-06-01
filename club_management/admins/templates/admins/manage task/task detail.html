@@ -1,0 +1,52 @@
+{% extends "club/base.html"%}
+{% block content %}
+<div style="margin-left: 10px;">
+    <br>
+    <a class="button" href="{% url 'admin-task' %}">Back</a>
+    <br><br>
+    <ul class="header">
+        <li style="font-weight: bold; font-size: 18px;">Title: {{ task.title }}</li>
+        <li style="float: right; font-size: 18px;">{{ task.datetime_created|date:"d F Y P" }}</li>
+    </ul>
+    <br>
+    <p style="font-size: 18px;">Deadline: {{ task.deadline|date:"d F Y P" }}</p>
+    <div style="font-size:18px; margin-bottom: 5px;">Description:</div>
+    <div class="detailBox">{{ task.detail }}</div>
+    <br>
+    <a class="button" href="{% url 'admin-task-detail-edit' task.id %}">Edit</a>
+    <br><br>
+    <div style="font-size: 18px;">Member Task Progression</div>
+    <table class="table" style="width:100%; float:left;">
+        <tr>
+            <th style="width: 20%;">Member</th>
+            <th style="text-align:center; width:15%;">Submitted</th>
+            <th style="text-align:center; width:40%;">File</th>
+            <th style="text-align:center; width:25%;">Submission DateTime</th>
+        </tr>
+        {% for assign in assign_users %}
+        <tr style="height: 35px;">
+            <td style="font-size:16px;">{{ assign.user.username }}</td>
+
+            {% if assign.complete == 1 %}
+                <td style="text-align:center; color:green;">Yes</td>
+            {% else %}
+                <td style="text-align:center; color:red;">No</td>
+            {% endif %}
+
+            {% if assign.upload_file %}
+                <td style="text-align:center;"><a class="" href="media/{{ assign.upload_file }}" download>{{ assign.upload_file }}</a></td>
+            {% else %}
+                <td style="text-align:center;">&#8212</td>
+            {% endif %}
+
+            {% if assign.datetime_complete %}
+                <td style="text-align:center;">{{ assign.datetime_complete }}</td>
+            {% else %}
+                <td style="text-align:center;">&#8212</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock content %}

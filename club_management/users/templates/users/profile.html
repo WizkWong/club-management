@@ -8,15 +8,20 @@
         {{ user.email }}
     </p>
 </div>
+<div style="font-size:18px; margin: 10px 20px;">Description:</div>
+<div class="detailBox" style="margin: 0px 20px;">{{ user.profile.description }}</div>
 <div class="container">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset>
-            <legend>Profile Detail</legend>
+            <legend>Edit Profile</legend>
             {{ u_form.as_p }}
             {{ p_form.as_p }}
         </fieldset>
             <button type="submit">Update</button> <br>
     </form>
+    <br>
+    <a class="button" href="{% url 'user-password' %}">Change Password</a>
+    <div style="margin-bottom: 50px"></div>
 </div>
 {% endblock content %}

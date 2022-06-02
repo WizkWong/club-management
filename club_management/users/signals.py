@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from .models import profile, User_request
 from admins.models import Request_feedback
+from club_management.settings import MEDIA_URL
 import os
 
 
@@ -17,8 +18,8 @@ def delete_profile(sender, instance, **kwargs):
     if instance.profile.image == 'default.jpg':
         return
     else:
-        if os.path.exists(f'media/{instance.profile.image}'):
-            os.remove(f'media/{instance.profile.image}')
+        if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{instance.profile.image}'):
+            os.remove(f'{MEDIA_URL.replace("/", "")}/{instance.profile.image}')
 
 
 # @receiver(post_save, sender=User)

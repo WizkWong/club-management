@@ -213,7 +213,15 @@ ul.header{
     font-size: 20px;
     right: 10px;
     top: 20%;
-    bottom: 80%;
+}
+
+.rectangleBoxPercentage{
+    display: block;
+    position: absolute;
+    font-size: 20px;
+    right: 10px;
+    top: 40%;
+    font-weight: bold;
 }
 
 .detailBox {

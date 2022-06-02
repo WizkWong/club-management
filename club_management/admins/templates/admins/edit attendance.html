@@ -1,0 +1,39 @@
+{% extends "club/base.html"%}
+{% block content %}
+<br>
+<a class="button" href="{% url 'admin-attendance' %}">Back</a>
+<br><br>
+<div style="font-weight: bold; font-size: 20px;">Attendance of Event: {{ event.title }}</div>
+<table class="table" style="width: 100%;">
+    <tr>
+        <th>Member</th>
+        <th>Attendance</th>
+    </tr>
+</table>
+<div style="overflow: auto; height: 600px;">
+    <table class="table" style="width: 100%;">
+        {% for atd in attendance_of_users %}
+        <tr style=" border: 2px groove;
+            {% if atd.attendance == present  %}
+                background-color: #57FF59;
+            {% elif atd.attendance == absent  %}
+                background-color: #FF5757;
+            {% elif atd.attendance == late  %}
+                background-color: #FFFC57;
+            {% endif  %}
+        ">
+            <td style="font-size: 18px; height: 50px; width: 150px; border: 1px solid" >{{ atd.user.username }}</td>
+            <td style="font-size: 18px; height: 50px; width: 200px; border: 1px solid">
+                {% if atd.attendance == present  %}
+                    Present
+                {% elif atd.attendance == absent  %}
+                    Absent
+                {% elif atd.attendance == late  %}
+                    Late
+                {% endif  %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

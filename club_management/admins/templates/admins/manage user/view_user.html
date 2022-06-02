@@ -11,10 +11,10 @@
 </form>
 <table class="table">
     <tr>
-        <th style="width: 250px;">Username</th>
-        <th style="width: 350px">Email</th>
-        <th style="width: 500px;">Description</th>
-        <th style="width: 300px;">Profile Picture</th>
+        <th style="width: 125px;">Username</th>
+        <th style="width: 175px">Email</th>
+        <th style="width: 250px;">Description</th>
+        <th style="width: 150px;">Profile Picture</th>
     </tr>
 </table>
 <div style="overflow: auto; height: 550px;">
@@ -24,7 +24,7 @@
             <td style="width: 250px;">{{ u.username }}</td>
             <td style="width: 350px">{{ u.email }}</td>
             {% if u.profile.description %}
-            <td>{{ u.profile.description }}</td>
+            <td style="text-align:center; width: 500px;">{{ u.profile.description }}</td>
             {% else %}
             <td style="text-align:center; width: 500px;">&#8212</td>
             {% endif %}

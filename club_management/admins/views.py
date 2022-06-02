@@ -6,12 +6,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm
 from users.models import User_request, Task_assigned
-from .models import Request_feedback, Event, Task
+from .models import Request_feedback, Event, Task, Attendance_of_user
 from .forms import RequestFeedbackForm, TaskForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from .method import UserTaskPercentage
+from .method import Percentage
 
 
 def permission(request):
@@ -22,8 +22,25 @@ def permission(request):
 @login_required
 def manage_attendance(request):
     permission(request)
+    events = Event.objects.all().order_by('-datetime_created')
+    attendance = []
+    for event in events:
+        n = [att.attendance for att in Attendance_of_user.objects.filter(event=event.id)]
+        attendance.append(Percentage(len(n) - n.count(Attendance_of_user.ABSENT), len(n)))
     content = {
-        'title': 'Manage Attendance'
+        'title': 'Manage Attendance',
+        'events': zip(events, attendance)
+    }
+    return render(request, 'admins/attendance.html', content)
+
+
+@login_required
+def edit_attendance(request, pk):
+    event = get_object_or_404(Event, id=pk)
+    permission(request)
+    content = {
+        'title': 'Manage Attendance',
+        'attendance_of_users': Attendance_of_user.objects.filter(event=event)
     }
     return render(request, 'admins/attendance.html', content)
 
@@ -35,7 +52,7 @@ def manage_task(request):
     number_completion = []
     for task in tasks:
         n = [user_task.complete for user_task in Task_assigned.objects.filter(task=task.id)]
-        number_completion.append(UserTaskPercentage(n.count(True), len(n)))
+        number_completion.append(Percentage(n.count(True), len(n)))
 
     content = {
         'title': 'Manage Task',

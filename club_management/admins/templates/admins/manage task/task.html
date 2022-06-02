@@ -11,13 +11,7 @@
         <div class="rectangleBoxShortText" style="color: red;">Deadline: {{ task.deadline|date:"d F Y, P" }}</div>
         <br>
         <div class="rectangleBoxTime">{{ task.datetime_created|date:"d F Y P" }}</div>
-        <div style="
-            display: block;
-            position: absolute;
-            font-size: 20px;
-            right: 10px;
-            top: 40%;
-            font-weight: bold;
+        <div class="rectangleBoxPercentage" style="
             {% if number.percentage >= 80 %}
             color: #14C22C;
             {% elif number.percentage < 50 %}

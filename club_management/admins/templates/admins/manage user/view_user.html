@@ -9,138 +9,26 @@
     <label></label><input class="searchBar" type="text" name="search" value="{{ search }}" placeholder="search username">
     <input class="button" type="submit" value="Search">
 </form>
-<div style="overflow: auto; height: 600px;">
+<table class="table">
+    <tr>
+        <th style="width: 250px;">Username</th>
+        <th style="width: 350px">Email</th>
+        <th style="width: 500px;">Description</th>
+        <th style="width: 300px;">Profile Picture</th>
+    </tr>
+</table>
+<div style="overflow: auto; height: 550px;">
     <table class="table">
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th style="width: 50%;">Description</th>
-            <th style="width: 120px;">Profile Picture</th>
-            <th></th>
-            <th></th>
-        </tr>
         {% for u in all_user %}
         <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
+            <td style="width: 250px;">{{ u.username }}</td>
+            <td style="width: 350px">{{ u.email }}</td>
             {% if u.profile.description %}
             <td>{{ u.profile.description }}</td>
             {% else %}
-            <td style="text-align:center;">&#8212</td>
+            <td style="text-align:center; width: 500px;">&#8212</td>
             {% endif %}
-            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
-            <td style="width: 70px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
-            </td>
-            <td style="width: 90px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-delete' u.username%}">Delete</a>
-            </td>
-        </tr>
-                <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
-            {% if u.profile.description %}
-            <td>{{ u.profile.description }}</td>
-            {% else %}
-            <td style="text-align:center;">&#8212</td>
-            {% endif %}
-            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
-            <td style="width: 70px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
-            </td>
-            <td style="width: 90px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-delete' u.username%}">Delete</a>
-            </td>
-        </tr>
-                <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
-            {% if u.profile.description %}
-            <td>{{ u.profile.description }}</td>
-            {% else %}
-            <td style="text-align:center;">&#8212</td>
-            {% endif %}
-            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
-            <td style="width: 70px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
-            </td>
-            <td style="width: 90px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-delete' u.username%}">Delete</a>
-            </td>
-        </tr>
-                <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
-            {% if u.profile.description %}
-            <td>{{ u.profile.description }}</td>
-            {% else %}
-            <td style="text-align:center;">&#8212</td>
-            {% endif %}
-            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
-            <td style="width: 70px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
-            </td>
-            <td style="width: 90px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-delete' u.username%}">Delete</a>
-            </td>
-        </tr>
-                <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
-            {% if u.profile.description %}
-            <td>{{ u.profile.description }}</td>
-            {% else %}
-            <td style="text-align:center;">&#8212</td>
-            {% endif %}
-            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
-            <td style="width: 70px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
-            </td>
-            <td style="width: 90px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-delete' u.username%}">Delete</a>
-            </td>
-        </tr>
-                <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
-            {% if u.profile.description %}
-            <td>{{ u.profile.description }}</td>
-            {% else %}
-            <td style="text-align:center;">&#8212</td>
-            {% endif %}
-            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
-            <td style="width: 70px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
-            </td>
-            <td style="width: 90px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-delete' u.username%}">Delete</a>
-            </td>
-        </tr>
-                <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
-            {% if u.profile.description %}
-            <td>{{ u.profile.description }}</td>
-            {% else %}
-            <td style="text-align:center;">&#8212</td>
-            {% endif %}
-            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
-            <td style="width: 70px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
-            </td>
-            <td style="width: 90px; height: 50px;">
-                <a class="button" href="{% url 'admin-user-delete' u.username%}">Delete</a>
-            </td>
-        </tr>
-                <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
-            {% if u.profile.description %}
-            <td>{{ u.profile.description }}</td>
-            {% else %}
-            <td style="text-align:center;">&#8212</td>
-            {% endif %}
-            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
+            <td style="width: 110px;"><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
             <td style="width: 70px; height: 50px;">
                 <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
             </td>

@@ -11,21 +11,27 @@
             <br>
             {{ form.as_p }}
             <div>Assigned Task to Member</div>
-            <table class="table" style="width:30%; float:left;">
-                <tr>
-                    <th>Member</th>
-                    <th style="width:100px; text-align:center;">Assigned</th>
-                </tr>
-                {% for user in all_user %}
-                <tr>
-                    <td style="font-size:16px;">{{ user.username }}</td>
-                    <td style="text-align:center;">
-                        <input style="width:20px; height:20px; padding:100px;"
-                               type="checkbox" value="{{ user.id }}" name="users">
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
+            <div style="float: left;">
+                <table class="table" style="width:400px;">
+                    <tr>
+                        <th>Member</th>
+                        <th style="width:100px; text-align:center;">Assigned</th>
+                    </tr>
+                </table>
+                <div style="overflow: auto; height: 350px;">
+                <table class="table" style="width:400px;">
+                    {% for user in all_user %}
+                    <tr>
+                        <td style="font-size:16px;">{{ user.username }}</td>
+                        <td style="text-align:center; width: 100px;">
+                            <input style="width:20px; height:20px; padding:100px;"
+                                   type="checkbox" value="{{ user.id }}" name="users">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                </div>
+            </div>
             <button type="button" style="width:125px; padding:8px 0px; margin: 5px;" onclick="selectAll()">
                 <div id="select">Select All</div>
             </button>

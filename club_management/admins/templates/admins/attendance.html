@@ -1,14 +1,15 @@
 {% extends "club/base.html"%}
 {% block content %}
 <h3>All Attendance</h3>
-
-{% for task, number in tasks %}
+<br>
+{% for event, attendance in events %}
 <div class="rectangleBox" style="background-color:#E8E8E8;">
-    <a href="{% url 'admin-task-detail' task.id %}">
-        <div class="rectangleBoxTitle">{{ task.title }}</div>
-        <div class="rectangleBoxShortText" style="color: red;">Deadline: {{ task.deadline|date:"d F Y, P" }}</div>
+    <a href="{% url 'admin-attendance-edit' event.id %}">
+        <div class="rectangleBoxTitle">{{ event.title }}</div>
+        <div class="rectangleBoxShortText" style="color: green;">Start Time: {{ event.start_time|date:"d F Y, P" }}</div>
+        <div class="rectangleBoxShortText" style="color: green;">End Time: {{ event.end_time|date:"d F Y, P" }}</div>
         <br>
-        <div class="rectangleBoxTime">{{ task.datetime_created|date:"d F Y P" }}</div>
+        <div class="rectangleBoxTime">{{ event.datetime_created|date:"d F Y P" }}</div>
         <div style="
             display: block;
             position: absolute;
@@ -16,13 +17,13 @@
             right: 10px;
             top: 40%;
             font-weight: bold;
-            {% if number.percentage >= 80 %}
+            {% if attendance.percentage >= 80 %}
             color: #14C22C;
-            {% elif number.percentage < 50 %}
+            {% elif attendance.percentage < 50 %}
             color: red;
             {% endif %}
         ">
-            {{ number.total_completes }}/{{ number.total }}&nbsp&nbsp&nbsp&nbsp{{ number.percentage }}%
+            {{ attendance.value }}/{{ attendance.total }}&nbsp&nbsp&nbsp&nbsp{{ attendance.percentage }}%
         </div>
     </a>
 </div>

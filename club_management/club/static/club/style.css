@@ -181,7 +181,8 @@ ul.header{
 }
 
 .rectangleBox {
-    width: 100%;
+    position: absolute;
+    width: 98%;
     min-height: 50px;
     box-shadow: 3px 3px #E8E8E8;
     border-radius: 7px;

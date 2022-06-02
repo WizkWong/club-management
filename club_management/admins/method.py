@@ -1,5 +1,5 @@
-class UserTaskPercentage:
-    def __init__(self, total_completes, total):
-        self.total_completes = total_completes
+class Percentage:
+    def __init__(self, value, total):
+        self.value = value
         self.total = total
-        self.percentage = round((self.total_completes / self.total * 100), 1)
+        self.percentage = round((self.value / self.total * 100), 1)

@@ -2,7 +2,7 @@
 {% block content %}
 <h2>Your Request</h2>
 <a class="button" href="{% url 'user-request-create' %}">Create Request</a>
-<br><br><br>
+<br><br>
 {% for request in requests %}
 <div class="rectangleBox" style="background-color:#E8E8E8;">
     <a href="{% url 'user-request-detail' request.id %}">

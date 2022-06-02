@@ -40,9 +40,13 @@ def edit_attendance(request, pk):
     permission(request)
     content = {
         'title': 'Manage Attendance',
-        'attendance_of_users': Attendance_of_user.objects.filter(event=event)
+        'event': event,
+        'attendance_of_users': Attendance_of_user.objects.filter(event=event),
+        'present': Attendance_of_user.PRESENT,
+        'absent': Attendance_of_user.ABSENT,
+        'late': Attendance_of_user.LATE
     }
-    return render(request, 'admins/attendance.html', content)
+    return render(request, 'admins/edit attendance.html', content)
 
 
 @login_required

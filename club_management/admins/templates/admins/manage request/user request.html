@@ -24,7 +24,7 @@
 ">
     <a href="{% url 'admin-request-detail' type request.id %}">
         <div class="rectangleBoxTitle">{{ request.title }}</div>
-        <div class="rectangleBoxShortText">request by {{ request.user }}</div>
+        <div class="rectangleBoxShortText">request by {{ request.user|default_if_none:"DELETED" }}</div>
         <div class="rectangleBoxTime">{{ request.datetime_created|date:"d F Y P" }}</div>
         <div class="rectangleBoxApproval">
         {% if request.request_feedback.approval == 1 %}

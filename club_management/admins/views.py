@@ -38,6 +38,18 @@ def manage_attendance(request):
 def edit_attendance(request, pk):
     event = get_object_or_404(Event, id=pk)
     permission(request)
+
+    if request.method == 'POST':
+        for atd in Attendance_of_user.objects.filter(event=event):
+            user = atd.user
+            new_atd = int(request.POST.get(user.username))
+            if atd.attendance == new_atd:
+                continue
+            else:
+                Attendance_of_user.objects.filter(user=user.id).update(attendance=new_atd)
+
+        messages.success(request, f"Attendance from '{event.title}' Event is save")
+
     content = {
         'title': 'Manage Attendance',
         'event': event,
@@ -72,14 +84,17 @@ def create_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            task = form.save(commit=False)
-            task.user = request.user
-            task.save()
             user_list = [User.objects.get(id=user_id) for user_id in request.POST.getlist('users')]
-            for user in user_list:
-                Task_assigned.objects.create(task=task, user=user)
-            messages.success(request, 'New Task Created')
-            return redirect('admin-task')
+            if len(user_list) == 0:
+                messages.error(request, 'Please assign this task to at least one member')
+            else:
+                task = form.save(commit=False)
+                task.user = request.user
+                task.save()
+                for user in user_list:
+                    Task_assigned.objects.create(task=task, user=user)
+                messages.success(request, f'{task.title} Task is successfully created')
+                return redirect('admin-task')
 
     else:
         form = TaskForm()

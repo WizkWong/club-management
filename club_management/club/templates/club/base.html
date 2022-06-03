@@ -21,7 +21,13 @@
     {% include "club\navigation bar.html" %}
     {% if messages %}
         {% for message in messages %}
-            <div>
+            <div style="margin-top: -10px;
+            {% if message.tags == 'success' %}
+            background-color: #57FF59;
+            {% elif message.tags == 'error' %}
+            background-color: #FF5757;
+            {% endif %}
+            ">
                 <span onclick="this.parentElement.style.display='none';">&times;</span>
                 {{ message }}
             </div>

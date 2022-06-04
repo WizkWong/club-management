@@ -9,26 +9,26 @@
     <label></label><input class="searchBar" type="text" name="search" value="{{ search }}" placeholder="search username">
     <input class="button" type="submit" value="Search">
 </form>
-<div style="overflow-x: auto;">
+<table class="table">
+    <tr>
+        <th style="width: 125px;">Username</th>
+        <th style="width: 175px">Email</th>
+        <th style="width: 250px;">Description</th>
+        <th style="width: 150px;">Profile Picture</th>
+    </tr>
+</table>
+<div style="overflow: auto; height: 550px;">
     <table class="table">
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th style="width: 50%;">Description</th>
-            <th style="width: 120px;">Profile Picture</th>
-            <th></th>
-            <th></th>
-        </tr>
         {% for u in all_user %}
         <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
+            <td style="width: 250px;">{{ u.username }}</td>
+            <td style="width: 350px">{{ u.email }}</td>
             {% if u.profile.description %}
-            <td>{{ u.profile.description }}</td>
+            <td style="text-align:center; width: 500px;">{{ u.profile.description }}</td>
             {% else %}
-            <td style="text-align:center;">&#8212</td>
+            <td style="text-align:center; width: 500px;">&#8212</td>
             {% endif %}
-            <td><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
+            <td style="width: 110px;"><img class="profile-pic" src="{{ u.profile.image.url }}"></td>
             <td style="width: 70px; height: 50px;">
                 <a class="button" href="{% url 'admin-user-edit' u.username %}">Edit</a>
             </td>

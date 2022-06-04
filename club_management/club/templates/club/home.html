@@ -2,20 +2,11 @@
 {% block content %}
 <h2><bold>Home Page</bold></h2>
 This is home page, Welcome
-{% for post in profile %}
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.author }} on {{ post.date_posted }}</p>
-    <p>{{ post.content }}</p>
-{% endfor %}{% for post in profile %}
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.author }} on {{ post.date_posted }}</p>
-    <p>{{ post.content }}</p>
-{% endfor %}{% for post in profile %}
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.author }} on {{ post.date_posted }}</p>
-    <p>{{ post.content }}</p>
-{% endfor %}
+{% for request in pending_requests %}
+    <h3>{{ request.title }}</h3>
+    <p>{{ request.request_feedback.approval }}</p>
 <br>
+{% endfor %}
 
 <div class="footer">
     <div class="footerbox">

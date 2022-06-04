@@ -7,11 +7,7 @@
 {% for task, number in tasks %}
 <div class="rectangleBox" style="background-color:#E8E8E8;">
     <a href="{% url 'admin-task-detail' task.id %}">
-        <div class="rectangleBoxTitle">{{ task.title }}</div>
-        <div class="rectangleBoxShortText" style="color: red;">Deadline: {{ task.deadline|date:"d F Y, P" }}</div>
-        <br>
-        <div class="rectangleBoxTime">{{ task.datetime_created|date:"d F Y P" }}</div>
-        <div class="rectangleBoxPercentage" style="
+        <div class="rectangleBoxPercentage" style="margin-top: 35px;
             {% if number.percentage >= 80 %}
             color: #14C22C;
             {% elif number.percentage < 50 %}
@@ -20,6 +16,9 @@
         ">
             {{ number.value }}/{{ number.total }}&nbsp&nbsp&nbsp&nbsp{{ number.percentage }}%
         </div>
+        <div class="rectangleBoxTitle">{{ task.title }}</div>
+        <div class="rectangleBoxShortText" style="color: red;">Deadline: {{ task.deadline|date:"d F Y, P" }}</div>
+        <div class="rectangleBoxTime">{{ task.datetime_created|date:"d F Y P" }}</div>
     </a>
 </div>
 {% endfor %}

@@ -23,20 +23,19 @@
     {% endif %}
 ">
     <a href="{% url 'admin-request-detail' type request.id %}">
+        <div class="rectangleBoxApproval" style="margin-top: 35px;">
+        {% if request.request_feedback.approval == 1 %}
+            Accepted
+        {% elif request.request_feedback.approval == 0 %}
+            Rejected
+        {% elif request.request_feedback.approval == 2 %}
+            Pending
+        {% endif %}
+        </div>
         <div class="rectangleBoxTitle">{{ request.title }}</div>
         <div class="rectangleBoxShortText">request by {{ request.user|default_if_none:"DELETED" }}</div>
         <div class="rectangleBoxTime">{{ request.datetime_created|date:"d F Y P" }}</div>
-        <div class="rectangleBoxApproval">
-        {% if request.request_feedback.approval == 1 %}
-            <p>Accepted</p>
-        {% elif request.request_feedback.approval == 0 %}
-            <p>Rejected</p>
-        {% elif request.request_feedback.approval == 2 %}
-            <p>Pending</p>
-        {% endif %}
-        </div>
     </a>
-<br>
 </div>
 {% endfor %}
 {% endblock content %}

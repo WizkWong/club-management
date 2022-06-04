@@ -172,13 +172,11 @@ ul.header{
 }
 
 .rectangleBox {
-    position: absolute;
-    width: 98%;
+    width: 100%;
     min-height: 50px;
     box-shadow: 3px 3px #E8E8E8;
     border-radius: 7px;
     margin: 0px 0px 10px;
-    z-index: -1;
 }
 
 .rectangleBox a {
@@ -191,7 +189,7 @@ ul.header{
 .rectangleBoxTitle {
     display: block;
     font-size: 20px;
-    padding: 10px 0px 15px;
+    padding: 10px 0px;
 }
 
 .rectangleBoxShortText {
@@ -202,26 +200,23 @@ ul.header{
 
 .rectangleBoxTime {
     display: block;
-    position: absolute;
     font-size: 14px;
-    bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .rectangleBoxApproval {
     display: block;
-    position: absolute;
+    float: right;
     font-size: 20px;
-    right: 10px;
-    top: 20%;
+    margin-right: 5px;
 }
 
 .rectangleBoxPercentage{
     display: block;
-    position: absolute;
+    float: right;
     font-size: 20px;
-    right: 10px;
-    top: 40%;
     font-weight: bold;
+    margin-right: 5px;
 }
 
 .detailBox {
@@ -267,10 +262,6 @@ ul.header{
 .attendance input[type="radio"] {
     opacity: 0.011;
     z-index: 100;
-}
-
-.attendance input[type="radio"]:checked + label {
-
 }
 
 .attendance label {

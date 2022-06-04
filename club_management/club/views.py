@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from users.models import User_request
 
 # from django.http import HttpResponse
 
@@ -21,7 +22,8 @@ posts = [
 def home(request):
     context = {
         'profile': posts,
-        'title': 'Home'
+        'title': 'Home',
+        'pending_requests': [r for r in User_request.objects.all() if r.request_feedback.approval == r.request_feedback.PENDING]
     }
     return render(request, 'club/home.html', context)
 

@@ -4,12 +4,7 @@
 {% for event, attendance in events %}
 <div class="rectangleBox" style="background-color:#E8E8E8;">
     <a href="{% url 'admin-attendance-edit' event.id %}">
-        <div class="rectangleBoxTitle">{{ event.title }}</div>
-        <div class="rectangleBoxShortText" style="color: green;">Start Time: {{ event.start_time|date:"d F Y, P" }}</div>
-        <div class="rectangleBoxShortText" style="color: green;">End Time: {{ event.end_time|date:"d F Y, P" }}</div>
-        <br>
-        <div class="rectangleBoxTime">{{ event.datetime_created|date:"d F Y P" }}</div>
-        <div class="rectangleBoxPercentage" style="
+        <div class="rectangleBoxPercentage" style="margin-top: 50px;
             {% if attendance.percentage >= 80 %}
             color: #14C22C;
             {% elif attendance.percentage < 50 %}
@@ -18,6 +13,10 @@
         ">
             {{ attendance.value }}/{{ attendance.total }}&nbsp&nbsp&nbsp&nbsp{{ attendance.percentage }}%
         </div>
+        <div class="rectangleBoxTitle">{{ event.title }}</div>
+        <div class="rectangleBoxShortText" style="color: green;">Start Time: {{ event.start_time|date:"d F Y, P" }}</div>
+        <div class="rectangleBoxShortText" style="color: green;">End Time: {{ event.end_time|date:"d F Y, P" }}</div>
+        <div class="rectangleBoxTime">{{ event.datetime_created|date:"d F Y P" }}</div>
     </a>
 </div>
 {% endfor %}

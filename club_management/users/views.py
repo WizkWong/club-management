@@ -3,6 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserRequestForm
 from .models import User_request
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
@@ -86,6 +88,26 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+
+        if form.is_valid():
+            user_pss = form.save()
+            update_session_auth_hash(request, user_pss)
+            messages.success(request, f'Your account password was successfully change!')
+            return redirect('user-profile')
+
+    else:
+        form = PasswordChangeForm(request.user)
+
+    content = {
+        'title': 'Change User Password',
+        'form': form,
+    }
+    return render(request, 'users/change password.html', content)
 
 
 @login_required

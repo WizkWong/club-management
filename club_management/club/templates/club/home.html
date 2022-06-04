@@ -1,13 +1,46 @@
 {% extends "club/base.html"%}
 {% block content %}
-<h2><bold>Home Page</bold></h2>
-This is home page, Welcome
-{% for request in pending_requests %}
-    <h3>{{ request.title }}</h3>
-    <p>{{ request.request_feedback.approval }}</p>
-<br>
-{% endfor %}
-
+{% if user.is_superuser %}
+    <div style="float: right; border: 5px groove; overflow: auto; width: 250px; max-height: 200px;">
+        Your Pending Request Title
+        {% for request in pending_requests %}
+            <div style="min-height: 25px; width: 100%; background-color:#E8E8E8; margin: 5px 0px;">
+                <a style="
+                display: block;
+                color: black;
+                text-decoration: none;
+                margin-left: 10px;"
+                   href="{% url 'admin-request-detail' 'all' request.id %}">
+                    {{ request.title|truncatechars:25 }}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% if title_text %}
+    <h2><bold>{{ title_text }}</bold></h2>
+{% else %}
+    <h2><bold>Welcome to this club</bold></h2>
+{% endif %}
+{% if paragraph1 %}
+    <p style="width: 70%;">{{ paragraph1 }}</p>
+{% endif %}
+{% if image %}
+    {% load static %}
+    <br><br><br>
+    <img class="home-background" src="{% get_media_prefix %}{{ image }}" alt="background-picture">
+{% endif %}
+{% if paragraph2 %}
+    <p style="width: 80%;">{{ paragraph2 }}</p>
+{% endif %}
+{% if paragraph3 %}
+    <p style="width: 95%;">{{ paragraph3 }}</p>
+{% endif %}
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
 <div class="footer">
     <div class="footerbox">
         <p>Contact Us</p>

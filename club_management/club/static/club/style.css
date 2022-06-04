@@ -114,6 +114,15 @@ img.top-background{
     height: 100px;
 }
 
+img.home-background{
+    float: left;
+    display: block;
+    background-size: 100%;
+    width: 40%;
+    height: 40%;
+    margin: 5px;
+}
+
 table.table {
     width: 100%;
     border-collapse: collapse;

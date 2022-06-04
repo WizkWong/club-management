@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'club/style.css' %}">
-    {% if title %}
-        <title>{{ title }}</title>
+    {% if title_page %}
+        <title>{{ title_page }}</title>
     {% else %}
         <title>Club</title>
     {% endif %}
@@ -16,12 +16,20 @@
     {% endif %}
 <div id="sidebar">
     {% if title == "Home" or title == "About" %}
-        <img class="top-background" src="{% static 'club/default-top-background.jpg' %}" alt="background-picture">
+        <img class="top-background" src="{% get_media_prefix %}{{ top_background }}" alt="background-picture">
     {% endif %}
     {% include "club\navigation bar.html" %}
     {% if messages %}
         {% for message in messages %}
-            <div>
+            <div style="margin-top: -10px; border: 1px groove; font-size: 16px;
+            {% if message.tags == 'success' %}
+            background-color: #57FF59;
+            {% elif message.tags == 'error' %}
+            background-color: #FF5757;
+            {% else %}
+            background-color: #E8E8E8;
+            {% endif %}
+            ">
                 <span onclick="this.parentElement.style.display='none';">&times;</span>
                 {{ message }}
             </div>

@@ -1,10 +1,8 @@
 {% extends "club/base.html"%}
 {% block content %}
-<h2><bold>About Page</bold></h2>
-This is about page, go check it out
-<form action="." method="post">
-    {% csrf_token %}
-    <input type="text" name="search" placeholder="Search">
-    <input type="submit" value="Search">
-</form>
+<h2><bold>About Us</bold></h2>
+{% if paragraph %}
+    <p style="font-size: 18px">{{ paragraph }}</p>
+{% endif %}
+
 {% endblock content %}

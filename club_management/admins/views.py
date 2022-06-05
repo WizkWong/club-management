@@ -213,7 +213,7 @@ def change_password(request, pk):
         if form.is_valid():
             user_pss = form.save()
             update_session_auth_hash(request, user_pss)
-            messages.success(request, f'Account {pk} password was successfully change!')
+            messages.success(request, f'Account {user.username} password was successfully change!')
             return redirect('admin-user')
 
     else:

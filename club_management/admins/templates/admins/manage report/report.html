@@ -1,7 +1,15 @@
 {% extends "club/base.html"%}
 {% block content %}
 <div class="title">Report</div>
-
-
-
+<br>
+{% for event in events %}
+<div class="rectangleBox" style="background-color:#E8E8E8;">
+    <a href="{% url 'admin-report-generate' event.id %}" target="_blank">
+        <div class="rectangleBoxTitle">{{ event.title }}</div>
+        <div class="rectangleBoxShortText" style="color: green;">Start Time: {{ event.start_time|date:"d F Y, P" }}</div>
+        <div class="rectangleBoxShortText" style="color: green;">End Time: {{ event.end_time|date:"d F Y, P" }}</div>
+        <div class="rectangleBoxTime">{{ event.datetime_created|date:"d F Y P" }}</div>
+    </a>
+</div>
+{% endfor %}
 {% endblock content %}

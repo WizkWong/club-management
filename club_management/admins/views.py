@@ -13,14 +13,15 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .method import Percentage
 from django.utils import timezone
-from django.http import FileResponse, HttpResponse
+from django.utils.timezone import localtime
+from django.http import FileResponse
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus.tables import Table, TableStyle
 from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
+from reportlab.platypus import Table, TableStyle
+from textwrap import wrap
 
 
 def permission(request):
@@ -371,16 +372,40 @@ def generate_report(request, pk):
     # Create a canvas
     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
     # Create a text object
+    textob = c.beginText(220, 30)
+    textob.setFont("Helvetica", 24)
+    textob.textLine("Event Report")
+    c.drawText(textob)
+
     textob = c.beginText()
     textob.setTextOrigin(inch, inch)
     textob.setFont("Helvetica", 14)
+
+    n = [att.attendance for att in user_attendance]
+    pct_ob = (Percentage(len(n) - n.count(Attendance_of_user.ABSENT), len(n)))
     # Add lines of text
     lines = [
-        f'{event.title}',
-        f'{event.detail}',
-        f'{event.start_time}',
-        f'{event.end_time}',
+        f'Title: {event.title}',
+        '',
+        f'Event Start Time: {str(localtime(event.start_time))[:16]}',
+        '',
+        f'Event End Time:  {str(localtime(event.end_time))[:16]}',
+        '',
+        'Description:',
+        '',
+        f'Total Member:                             {pct_ob.total}',
+        '',
+        f'Total Present & Late Member:    {pct_ob.value}',
+        '',
+        f'Total Absent Member:                 {pct_ob.total - pct_ob.value}',
+        '',
+        f'Percentage of Present & Late:    {pct_ob.percentage}%',
     ]
+    text = "\n".join(wrap(event.detail, 65)).split('\n')
+    z = 7
+    for t in text:
+        lines.insert(z, t)
+        z += 1
 
     for line in lines:
         textob.textLine(line)
@@ -388,44 +413,51 @@ def generate_report(request, pk):
     c.drawText(textob)
     c.showPage()
 
+    textob = c.beginText(220, 30)
+    textob.setFont("Helvetica", 24)
+    textob.textLine("Attendance List")
+    c.drawText(textob)
+
     data = []
+    n = 1
+    for atd in user_attendance:
+        user = f'{atd.user.username.strip()}\n'
+        if atd.attendance == Attendance_of_user.PRESENT:
+            data.append([user, 'Present\n'])
 
-    # 23
-    n = 0
-    for x in range(0, 100):
-        for atd in user_attendance:
-            user = f'{atd.user.username.strip()}\n'
-            if atd.attendance == Attendance_of_user.PRESENT:
-                data.append([user, 'Present\n'])
+        elif atd.attendance == Attendance_of_user.ABSENT:
+            data.append([user, 'Absent\n'])
 
-            elif atd.attendance == Attendance_of_user.ABSENT:
-                data.append([user, 'Absent\n'])
+        elif atd.attendance == Attendance_of_user.LATE:
+            data.append([user, 'Late\n'])
 
-            elif atd.attendance == Attendance_of_user.LATE:
-                data.append([user, 'Late\n'])
+        if n == 23:
+            create_table(data, c)
+            n = 1
+            data.clear()
 
-            if n == 23:
-                c.showPage()
-                n = 0
+        else:
+            n += 1
 
-            else:
-                n += 1
+    create_table(data, c)
+    c.save()
+    buf.seek(0)
 
+    return FileResponse(buf, as_attachment=False, filename=f'{event.title}_report.pdf')
+
+
+def create_table(data, c):
     data.append(['Member\n', 'Attendance\n'])
 
-    t = Table(data, colWidths=250)
+    t = Table(data, colWidths=[300, 100])
     t.setStyle(TableStyle([('ALIGN', (0, 0), (-1, -1), 'LEFT'),
                            ('VALIGN', (0, 0), (-1, -1), 'BOTTOM'),
                            ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
                            ('BOX', (0, 0), (-1, -1), 0.25, colors.black)])),
 
     t.wrapOn(c, 500, len(data) * 100)
-    t.drawOn(c, 60, 40)
-
-    c.save()
-    buf.seek(0)
-
-    return FileResponse(buf, as_attachment=False, filename=f'{event.title}_report.pdf')
+    t.drawOn(c, 100, 40)
+    c.showPage()
 
 
 @login_required

@@ -12,6 +12,15 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .method import Percentage
+from django.utils import timezone
+from django.http import FileResponse, HttpResponse
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus.tables import Table, TableStyle
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
 
 
 def permission(request):
@@ -36,8 +45,8 @@ def manage_attendance(request):
 
 @login_required
 def edit_attendance(request, pk):
-    event = get_object_or_404(Event, id=pk)
     permission(request)
+    event = get_object_or_404(Event, id=pk)
 
     if request.method == 'POST':
         for atd in Attendance_of_user.objects.filter(event=event):
@@ -250,8 +259,8 @@ def add_user(request):
 
 @login_required
 def delete_user(request, pk):
-    user = get_object_or_404(User, Q(is_superuser=False), username=pk)
     permission(request)
+    user = get_object_or_404(User, Q(is_superuser=False), username=pk)
     if request.method == 'POST':
         User.objects.get(username=user.username).delete()
         messages.success(request, f'{user.username} account is successfully delete!')
@@ -297,8 +306,8 @@ def manage_request(request, types):
 
 @login_required
 def view_request_detail(request, types, pk):
-    user_request = get_object_or_404(User_request, id=pk)
     permission(request)
+    user_request = get_object_or_404(User_request, id=pk)
     if request.method == 'POST':
         form = RequestFeedbackForm(request.POST, instance=user_request.request_feedback)
 
@@ -324,8 +333,8 @@ def view_request_detail(request, types, pk):
 
 @login_required
 def delete_request(request, types, pk):
-    user_request = get_object_or_404(User_request, id=pk)
     permission(request)
+    user_request = get_object_or_404(User_request, id=pk)
     if request.method == 'POST':
         User_request.objects.get(id=pk).delete()
         messages.success(request, f'{user_request.title} request is successfully delete!')
@@ -343,12 +352,80 @@ def delete_request(request, types, pk):
 @login_required
 def manage_report(request):
     permission(request)
+    events = [e for e in Event.objects.all().order_by("-datetime_created") if e.end_time < timezone.now()]
 
     content = {
         'title': 'Manage Report',
-        'events': Event.objects.all()
+        'events': events
     }
     return render(request, 'admins/manage report/report.html', content)
+
+
+@login_required
+def generate_report(request, pk):
+    permission(request)
+    event = get_object_or_404(Event, id=pk)
+    user_attendance = Attendance_of_user.objects.filter(event=event.id).order_by("-user")
+    # Create Bytestream buffer
+    buf = io.BytesIO()
+    # Create a canvas
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    # Create a text object
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont("Helvetica", 14)
+    # Add lines of text
+    lines = [
+        f'{event.title}',
+        f'{event.detail}',
+        f'{event.start_time}',
+        f'{event.end_time}',
+    ]
+
+    for line in lines:
+        textob.textLine(line)
+
+    c.drawText(textob)
+    c.showPage()
+
+    data = []
+
+    # 23
+    n = 0
+    for x in range(0, 100):
+        for atd in user_attendance:
+            user = f'{atd.user.username.strip()}\n'
+            if atd.attendance == Attendance_of_user.PRESENT:
+                data.append([user, 'Present\n'])
+
+            elif atd.attendance == Attendance_of_user.ABSENT:
+                data.append([user, 'Absent\n'])
+
+            elif atd.attendance == Attendance_of_user.LATE:
+                data.append([user, 'Late\n'])
+
+            if n == 23:
+                c.showPage()
+                n = 0
+
+            else:
+                n += 1
+
+    data.append(['Member\n', 'Attendance\n'])
+
+    t = Table(data, colWidths=250)
+    t.setStyle(TableStyle([('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                           ('VALIGN', (0, 0), (-1, -1), 'BOTTOM'),
+                           ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+                           ('BOX', (0, 0), (-1, -1), 0.25, colors.black)])),
+
+    t.wrapOn(c, 500, len(data) * 100)
+    t.drawOn(c, 60, 40)
+
+    c.save()
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=False, filename=f'{event.title}_report.pdf')
 
 
 @login_required

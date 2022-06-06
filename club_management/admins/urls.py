@@ -18,5 +18,6 @@ urlpatterns = [
     path('request/<str:types>/<int:pk>/', views.view_request_detail, name='admin-request-detail'),
     path('request/<str:types>/<int:pk>/delete/', views.delete_request, name='admin-request-delete'),
     path('report/', views.manage_report, name='admin-report'),
+    path('report/generate:<int:pk>/', views.generate_report, name='admin-report-generate'),
     path('edit_page/', views.edit_page, name='admin-edit-page'),
 ]

@@ -366,7 +366,7 @@ def manage_report(request):
 def generate_report(request, pk):
     permission(request)
     event = get_object_or_404(Event, id=pk)
-    user_attendance = Attendance_of_user.objects.filter(event=event.id).order_by("-user")
+    user_attendance = Attendance_of_user.objects.filter(event=event).order_by("-user")
     # Create Bytestream buffer
     buf = io.BytesIO()
     # Create a canvas

@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import (
     profile,
-    User_request
+    User_request,
+    Task_assigned
 )
 
 
@@ -59,3 +60,9 @@ class UserRequestForm(forms.ModelForm):
     class Meta:
         model = User_request
         fields = ['title', 'detail']
+
+
+class TaskSubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Task_assigned
+        fields = ['upload_file']

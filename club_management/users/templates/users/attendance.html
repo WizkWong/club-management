@@ -1,8 +1,7 @@
 {% extends "club/base.html"%}
 {% block content %}
 <h2>Attendance</h2>
-<form method="POST">
-    {% csrf_token %}
+<form method="GET">
     <label style="font-size: 20px; margin-right: 10px;">Take Attendance:</label>
     <input style="
         margin-right: 10px;

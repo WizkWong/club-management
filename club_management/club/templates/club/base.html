@@ -15,7 +15,7 @@
         {% include 'club\sidebar.html' %}
     {% endif %}
 <div id="sidebar">
-    {% if title == "Home" or title == "About" %}
+    {% if title == "Home" or title == "About" or title == 'Edit Page' %}
         <img class="top-background" src="{% get_media_prefix %}{{ top_background }}" alt="background-picture">
     {% endif %}
     {% include "club\navigation bar.html" %}

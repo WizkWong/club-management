@@ -1,5 +1,19 @@
 import random
 from django.utils import timezone
+import os
+from club_management.settings import MEDIA_URL
+
+
+def write_file(filename, content):
+    if os.path.exists(f'{MEDIA_URL.replace("/", "")}/page/{filename}.txt'):
+        with open(f'{MEDIA_URL.replace("/", "")}/page/{filename}.txt', 'w') as f:
+            f.write(content)
+
+    else:
+        f = open(f'{MEDIA_URL.replace("/", "")}/page/{filename}.txt', "x")
+        f.close()
+        write_file(filename, content)
+
 
 class Percentage:
     def __init__(self, value, total):

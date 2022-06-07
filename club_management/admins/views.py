@@ -7,14 +7,15 @@ from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm
 from users.models import User_request, Task_assigned
 from .models import Request_feedback, Event, Task, Attendance_of_user
-from .forms import RequestFeedbackForm, TaskForm
+from .forms import RequestFeedbackForm, TaskForm, EditHomePageForm, EditAboutUsPageForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from .method import Percentage
+from .method import Percentage, write_file
 from django.utils import timezone
 from django.utils.timezone import localtime
 from django.http import FileResponse
+from club.views import read_file
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
@@ -468,9 +469,43 @@ def create_table(data, c):
 
 
 @login_required
-def edit_page(request):
+def edit_home_page(request):
     permission(request)
+    if request.method == 'POST':
+        form = EditHomePageForm(request.POST)
+        if form.is_valid():
+            for key, value in form.cleaned_data.items():
+                write_file(str(key), str(value if value is not None else ''))
+
+    else:
+        form = EditHomePageForm()
     content = {
-        'title': 'Edit Page'
+        'title': 'Edit Page',
+        'form': form,
+        'type': 'home',
+        'top_background': read_file('top_background.txt') if len(read_file('top_background.txt')) != 0
+        else 'page/default-top-background.jpg',
+        'image': read_file('home_picture.txt'),
     }
     return render(request, 'admins/edit page.html', content)
+
+
+@login_required
+def edit_about_page(request):
+    permission(request)
+    if request.method == 'POST':
+        form = EditAboutUsPageForm(request.POST)
+
+    else:
+        form = EditAboutUsPageForm()
+    content = {
+        'title': 'Edit Page',
+        'form': form,
+        'type': 'about',
+        'top_background': read_file('top_background.txt') if len(read_file('top_background.txt')) != 0
+        else 'page/default-top-background.jpg',
+    }
+    return render(request, 'admins/edit page.html', content)
+
+
+

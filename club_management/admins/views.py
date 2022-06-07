@@ -32,7 +32,8 @@ def permission(request):
 @login_required
 def manage_attendance(request):
     permission(request)
-    events = Event.objects.all().order_by('-datetime_created')
+    events = [event for event in Event.objects.all().order_by('-datetime_created')
+              if len(Attendance_of_user.objects.filter(event=event.id)) != 0]
     attendance = []
     for event in events:
         n = [att.attendance for att in Attendance_of_user.objects.filter(event=event.id)]
@@ -60,10 +61,14 @@ def edit_attendance(request, pk):
 
         messages.success(request, f"Attendance from '{event.title}' Event is save")
 
+    attendance = Attendance_of_user.objects.filter(event=event)
+    if len(attendance) == 0:
+        raise Http404(f"Attendance of {event.title} is not created")
+
     content = {
         'title': 'Manage Attendance',
         'event': event,
-        'attendance_of_users': Attendance_of_user.objects.filter(event=event),
+        'attendance_of_users': attendance,
         'present': Attendance_of_user.PRESENT,
         'absent': Attendance_of_user.ABSENT,
         'late': Attendance_of_user.LATE

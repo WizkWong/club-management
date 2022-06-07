@@ -6,6 +6,6 @@ import os
 
 
 @receiver(pre_delete, sender=Task_assigned)
-def delete_profile(sender, instance, **kwargs):
+def delete_task_file(sender, instance, **kwargs):
     if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{instance.upload_file}'):
         os.remove(f'{MEDIA_URL.replace("/", "")}/{instance.upload_file}')

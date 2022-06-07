@@ -12,7 +12,7 @@ class UserRegisterForm(UserCreationForm):
                                max_length=30,
                                min_length=6,
                                widget=forms.TextInput(attrs={'size': 20}))
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.TextInput(attrs={'size': 35}))
 
     class Meta:
         model = User

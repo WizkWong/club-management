@@ -7,12 +7,14 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserRequestForm
 from .models import User_request
-from admins.models import Attendance_of_user
+from admins.models import Attendance_of_user, Event
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from django.utils import timezone
+from admins.method import Attendance_code as Atd_code
 
 
 def permission(request, user):
@@ -186,7 +188,18 @@ def view_attendance(request):
 
     if request.method == "POST":
         code = request.POST.get('code')
-        print(code)
+        event = Atd_code.check(int(code))
+        if event is None:
+            messages.error(request, 'This code does not exist')
+        else:
+            atd = Attendance_of_user.objects.get(event=event, user=request.user)
+            if atd.attendance == Attendance_of_user.ABSENT:
+                atd.attendance = Attendance_of_user.PRESENT
+                atd.save()
+                messages.success(request, f'Successfully taken attendance from {event.title}')
+            else:
+                messages.error(request, f'You have already taken the attendance from {event.title}')
+
     user_atd = [atd for atd in Attendance_of_user.objects.filter(user=request.user).order_by("event")
                 if atd.attendance != Attendance_of_user.ABSENT]
     content = {

@@ -185,9 +185,9 @@ def delete_request(request, pk):
 @login_required
 def view_attendance(request):
     permission(request, request.user)
+    code = request.GET.get('code')
 
-    if request.method == "POST":
-        code = request.POST.get('code')
+    if code is not None:
         event = Atd_code.check(int(code))
         if event is None:
             messages.error(request, 'This code does not exist')

@@ -7,6 +7,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserRequestForm
 from .models import User_request
+from admins.models import Attendance_of_user
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
@@ -182,8 +183,15 @@ def delete_request(request, pk):
 @login_required
 def view_attendance(request):
     permission(request, request.user)
+
+    if request.method == "POST":
+        code = request.POST.get('code')
+        print(code)
+    user_atd = [atd for atd in Attendance_of_user.objects.filter(user=request.user).order_by("event")
+                if atd.attendance != Attendance_of_user.ABSENT]
     content = {
-        'title': 'User Attendance'
+        'title': 'User Attendance',
+        'user_attendance': user_atd,
     }
     return render(request, 'users/attendance.html', content)
 

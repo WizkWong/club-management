@@ -385,6 +385,8 @@ def generate_report(request, pk):
     pct_ob = (Percentage(len(n) - n.count(Attendance_of_user.ABSENT), len(n)))
     # Add lines of text
     lines = [
+        f'Report Generated at: {str(localtime().now())[:16]}',
+        '',
         f'Title: {event.title}',
         '',
         f'Event Start Time: {str(localtime(event.start_time))[:16]}',
@@ -402,7 +404,7 @@ def generate_report(request, pk):
         f'Percentage of Present & Late:    {pct_ob.percentage}%',
     ]
     text = "\n".join(wrap(event.detail, 65)).split('\n')
-    z = 7
+    z = 9
     for t in text:
         lines.insert(z, t)
         z += 1

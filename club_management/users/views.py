@@ -5,8 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserRequestForm
-from .models import User_request
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserRequestForm, TaskSubmissionForm
+from .models import User_request, Task_assigned
 from admins.models import Attendance_of_user, Event
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.utils import timezone
 from admins.method import Attendance_code as Atd_code
+from django.db.models import Q
 
 
 def permission(request, user):
@@ -116,10 +117,37 @@ def change_password(request):
 @login_required
 def view_task(request):
     permission(request, request.user)
+    tasks = Task_assigned.objects.filter(user=request.user).order_by('-task')
     content = {
-        'title': 'User Task'
+        'title': 'User Task',
+        'tasks': tasks,
     }
     return render(request, 'users/task/task.html', content)
+
+
+@login_required
+def submit_task(request, pk):
+    permission(request, request.user)
+    task = get_object_or_404(Task_assigned, Q(user=request.user), task=pk)
+    if request.method == 'POST':
+        form = TaskSubmissionForm(request.POST, request.FILES, instance=task)
+        if form.is_valid():
+            print(form.cleaned_data)
+            form.save(commit=False)
+            form.complete = True
+            form.datetime_complete = timezone.now()
+            form.save()
+            messages.success(request, f'{task.task.title} task is submitted')
+            return redirect('submit-task', pk)
+    else:
+        form = TaskSubmissionForm(instance=task)
+
+    content = {
+        'title': 'Task submission',
+        'task': task,
+        'form': form,
+    }
+    return render(request, 'users/task/submit task.html', content)
 
 
 @login_required

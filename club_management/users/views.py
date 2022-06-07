@@ -132,8 +132,7 @@ def submit_task(request, pk):
     if request.method == 'POST':
         form = TaskSubmissionForm(request.POST, request.FILES, instance=task)
         if form.is_valid():
-            print(form.cleaned_data)
-            form.save(commit=False)
+            form = form.save(commit=False)
             form.complete = True
             form.datetime_complete = timezone.now()
             form.save()
@@ -155,7 +154,7 @@ def view_request(request):
     permission(request, request.user)
     content = {
         'title': 'request',
-        'requests': User_request.objects.filter(user=request.user)
+        'requests': User_request.objects.filter(user=request.user).order_by('-datetime_created')
     }
     return render(request, 'users/request/view request.html', content)
 

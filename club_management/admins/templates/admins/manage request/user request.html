@@ -1,7 +1,7 @@
 {% extends "club/base.html"%}
 {% block content %}
 <div class="title">All User Request</div>
-<form method="GET" action="{% url 'admin-request' type %}">
+<form method="GET">
     <label></label><input class="searchBar" type="text" name="search" value="{{ search }}" placeholder="search request title">
     <input class="button" type="submit" value="Search">
 </form>

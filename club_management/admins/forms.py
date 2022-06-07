@@ -38,3 +38,51 @@ class TaskForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'size': 60}),
             'deadline': DateTimePickerInput(),
         }
+
+
+class EditHomePageForm(forms.Form):
+    title_page = forms.CharField(required=False)
+    phone_number = forms.IntegerField(required=False)
+    email = forms.EmailField(required=False)
+    title_text = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': 163, "placeholder": "Title..."}))
+    paragraph1 = forms.CharField(required=False,
+                                 widget=forms.Textarea(
+                                     attrs={
+                                         "placeholder": " Paragraph...",
+                                         "rows": 10,
+                                         "cols": 150,
+                                         "class": "field"
+                                     }
+                                 ))
+    paragraph2 = forms.CharField(required=False,
+                                 widget=forms.Textarea(
+                                     attrs={
+                                         "placeholder": " Paragraph...",
+                                         "rows": 13,
+                                         "cols": 85,
+                                         "class": "field"
+                                     }
+                                 ))
+    paragraph3 = forms.CharField(required=False,
+                                 widget=forms.Textarea(
+                                     attrs={
+                                         "placeholder": " Paragraph...",
+                                         "rows": 10,
+                                         "cols": 150,
+                                         "class": "field"
+                                     }
+                                 ))
+    top_background = forms.ImageField(required=False)
+    home_picture = forms.ImageField(required=False)
+
+
+class EditAboutUsPageForm(forms.Form):
+    about_us = forms.CharField(required=False,
+                               widget=forms.Textarea(
+                                   attrs={
+                                       "placeholder": " We Are ...",
+                                       "rows": 20,
+                                       "cols": 160,
+                                       "class": "field"
+                                   }
+                               ))

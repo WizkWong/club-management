@@ -18,34 +18,35 @@
     </div>
 {% endif %}
 {% if title_text %}
-    <h2><bold>{{ title_text }}</bold></h2>
+    <h2>{{ title_text }}</h2>
 {% else %}
-    <h2><bold>Welcome to this club</bold></h2>
+    <h2>Welcome to this club</h2>
 {% endif %}
 {% if paragraph1 %}
-    <p style="{% if user.is_authenticated %}width: 70%;{% else %}width: 95%{% endif %}">{{ paragraph1 }}</p>
+    <p style="{% if user.is_authenticated %}width: 70%;{% else %}width: 95%;{% endif %}">{{ paragraph1 }}</p>
 {% endif %}
 {% if image %}
     {% load static %}
-    <br><br><br>
+    <br>
     <img class="home-background" src="{% get_media_prefix %}{{ image }}" alt="background-picture">
 {% endif %}
 {% if paragraph2 %}
-    <p style="{% if user.is_authenticated %}width: 80%;{% else %}width: 95%{% endif %}">{{ paragraph2 }}</p>
+    <p style="{% if user.is_authenticated %}width: 80%;{% else %}width: 95%;{% endif %} min-height: 320px;">{{ paragraph2 }}</p>
+{% else %}
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 {% endif %}
 {% if paragraph3 %}
     <p style="width: 95%;">{{ paragraph3 }}</p>
+    <br><br>
+{% else %}
+    <br><br><br><br>
 {% endif %}
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
+
 <div class="footer">
     <div class="footerbox">
         <p>Contact Us</p>
-        <p>Phone Number:+6017-6539532</p>
-        <p>Email Address: address</p>
+        <p>Phone Number: {{ phone_number }}</p>
+        <p>Email Address: {{ email }}</p>
     </div>
 </div>
 {% endblock content %}

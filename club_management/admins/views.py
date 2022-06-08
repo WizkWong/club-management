@@ -11,7 +11,7 @@ from .forms import RequestFeedbackForm, TaskForm, EditHomePageForm, EditAboutUsP
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from .method import Percentage
+from .method import Percentage, Attendance_code as Atd_code
 from django.utils import timezone
 from django.utils.timezone import localtime
 from django.http import FileResponse
@@ -572,8 +572,33 @@ def modify_event(request, pk):
 def view_event(request, pk):
     permission(request)
     event = get_object_or_404(Event, id=pk)
+    check_exist = Attendance_of_user.objects.filter(event=event).exists()
+    if check_exist:
+        atd_code = Atd_code.get_code(event)
+        if atd_code is None:
+            code = None
+            expired = None
+
+        else:
+            code = atd_code['code']
+            expired = atd_code['expired']
+
+    else:
+        if request.method == 'POST':
+            for user in User.objects.filter(is_superuser=False):
+                Attendance_of_user.objects.create(event=event, user=user)
+            Atd_code(event)
+            messages.success(request, 'Attendance Created')
+            return redirect('admin-event-detail', pk)
+
+        code = None
+        expired = None
+
     content = {
-        'event': event
+        'event': event,
+        'atd': check_exist,
+        'code': code,
+        'expired': expired,
     }
     return render(request, 'admins/manage event/event detail.html', content)
 

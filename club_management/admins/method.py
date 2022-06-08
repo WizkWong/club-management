@@ -28,7 +28,10 @@ class Attendance_code:
         for atd in Attendance_code.list:
             if atd.event == event:
                 if timezone.now() < atd.expired_date:
-                    return atd.code
+                    return {
+                        'code': atd.code,
+                        'expired': atd.expired_date,
+                    }
                 else:
                     return None
         return None

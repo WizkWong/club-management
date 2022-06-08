@@ -219,13 +219,17 @@ def view_attendance(request):
         if event is None:
             messages.error(request, 'This code does not exist')
         else:
-            atd = Attendance_of_user.objects.get(event=event, user=request.user)
-            if atd.attendance == Attendance_of_user.ABSENT:
-                atd.attendance = Attendance_of_user.PRESENT
-                atd.save()
-                messages.success(request, f'Successfully taken attendance from {event.title}')
+            if Attendance_of_user.objects.filter(event=event, user=request.user).exists():
+                atd = Attendance_of_user.objects.get(event=event, user=request.user)
+                if atd.attendance == Attendance_of_user.ABSENT:
+                    atd.attendance = Attendance_of_user.PRESENT
+                    atd.save()
+                    messages.success(request, f'Successfully taken attendance from {event.title}')
+                else:
+                    messages.error(request, f'You have already taken the attendance from {event.title}')
+
             else:
-                messages.error(request, f'You have already taken the attendance from {event.title}')
+                messages.error(request, f'Your Attendance is not exist. Reason: Created account before Attendance created')
 
     user_atd = [atd for atd in Attendance_of_user.objects.filter(user=request.user).order_by("event")
                 if atd.attendance != Attendance_of_user.ABSENT]

@@ -14,16 +14,18 @@ def delete_task_file(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Page)
 def replace_image(sender, instance, **kwargs):
-    print(not(str(instance.top_background).startswith('page')))
-    if not(str(instance.top_background).startswith('page')):
-        old_file = Page.objects.get(id=instance.id)
-        if old_file.top_background:
-            if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{old_file.top_background}'):
-                os.remove(f'{MEDIA_URL.replace("/", "")}/{old_file.top_background}')
+    page = Page.objects.first()
+    if page is None:
+        return
 
-    print(not(str(instance.image).startswith('page')))
+    if not(str(instance.top_background).startswith('page')):
+        page = Page.objects.get(id=instance.id)
+        if page.top_background:
+            if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{page.top_background}'):
+                os.remove(f'{MEDIA_URL.replace("/", "")}/{page.top_background}')
+
     if not(str(instance.image).startswith('page')):
-        old_file = Page.objects.get(id=instance.id)
-        if old_file.image:
-            if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{old_file.image}'):
-                os.remove(f'{MEDIA_URL.replace("/", "")}/{old_file.image}')
+        page = Page.objects.get(id=instance.id)
+        if page.image:
+            if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{page.image}'):
+                os.remove(f'{MEDIA_URL.replace("/", "")}/{page.image}')

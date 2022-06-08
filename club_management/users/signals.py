@@ -50,12 +50,8 @@ def replace_save_file(sender, instance, **kwargs):
 
         if str(instance.upload_file).startswith('files'):
             return
-
         else:
             old_file = Task_assigned.objects.get(task=instance.task, user=instance.user)
-            if old_file is not None:
-                if old_file.upload_file:
-                    if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{old_file.upload_file}'):
-                        os.remove(f'{MEDIA_URL.replace("/", "")}/{old_file.upload_file}')
-                else:
-                    return
+            if old_file.upload_file:
+                if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{old_file.upload_file}'):
+                    os.remove(f'{MEDIA_URL.replace("/", "")}/{old_file.upload_file}')

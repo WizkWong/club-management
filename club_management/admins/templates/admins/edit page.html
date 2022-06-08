@@ -6,7 +6,7 @@
 </div>
 
 <div class="container">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% if type == 'home' %}
             <p>Club Name: {{ form.title_page }} It is page title shown at the top of the window (Need to exit full screen in order to view)</p>
@@ -22,10 +22,12 @@
                 <h2>{{ form.title_text }}</h2>
                 <p style="width: 95%">{{ form.paragraph1 }}</p>
                 <br>
-                {% load static %}
-                <img class="home-background" src="{% get_media_prefix %}{{ image }}" alt="background-picture">
+                {% if image %}
+                    {% load static %}
+                    <img class="home-background" src="{% get_media_prefix %}{{ image }}" alt="background-picture">
+                {% endif %}
                 <p style="width: 95%">{{ form.paragraph2 }}</p>
-                <p>Background On Left {{ form.home_picture }}</p>
+                <p style="list-style-type: none;">Background On Left: {{ form.image }}</p>
                 <p style="width: 95%;">{{ form.paragraph3 }}</p>
             </fieldset>
         {% elif type == 'about' %}

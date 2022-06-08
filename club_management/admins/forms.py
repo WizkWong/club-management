@@ -1,5 +1,5 @@
 from django import forms
-from .models import Request_feedback, Task
+from .models import Request_feedback, Task, Page
 
 
 class DateTimePickerInput(forms.DateTimeInput):
@@ -40,7 +40,7 @@ class TaskForm(forms.ModelForm):
         }
 
 
-class EditHomePageForm(forms.Form):
+class EditHomePageForm(forms.ModelForm):
     title_page = forms.CharField(required=False)
     phone_number = forms.IntegerField(required=False)
     email = forms.EmailField(required=False)
@@ -58,7 +58,7 @@ class EditHomePageForm(forms.Form):
                                  widget=forms.Textarea(
                                      attrs={
                                          "placeholder": " Paragraph...",
-                                         "rows": 13,
+                                         "rows": 12,
                                          "cols": 85,
                                          "class": "field"
                                      }
@@ -72,11 +72,16 @@ class EditHomePageForm(forms.Form):
                                          "class": "field"
                                      }
                                  ))
-    top_background = forms.ImageField(required=False)
-    home_picture = forms.ImageField(required=False)
+    top_background = forms.ImageField(required=False, widget=forms.FileInput())
+    image = forms.ImageField(required=False, widget=forms.FileInput())
+
+    class Meta:
+        model = Page
+        fields = ['title_page', 'title_text', 'paragraph1', 'paragraph2', 'paragraph3',
+                  'phone_number', 'email', 'top_background', 'image']
 
 
-class EditAboutUsPageForm(forms.Form):
+class EditAboutUsPageForm(forms.ModelForm):
     about_us = forms.CharField(required=False,
                                widget=forms.Textarea(
                                    attrs={
@@ -86,3 +91,7 @@ class EditAboutUsPageForm(forms.Form):
                                        "class": "field"
                                    }
                                ))
+
+    class Meta:
+        model = Page
+        fields = ['about_us']

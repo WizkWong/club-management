@@ -9,7 +9,13 @@
     </a></li>
     {% endif %}
     <li><a class="nav {% if title == 'Home' %}select{% endif %}" href="{% url 'club-home'%}">Home</a></li>
-    <li><a class="nav {% if title == 'Event' %}select{% endif %}" href="{% if user.is_superuser %}{% url 'admin-event' %}{% else %}#{% endif %}">Event</a></li>
+    <li><a class="nav {% if title == 'Event' %}select{% endif %}" href="
+        {% if user.is_superuser %}
+            {% url 'admin-event' %}
+        {% else %}
+            {% url 'user-event' %}
+        {% endif %}
+    ">Event</a></li>
     <li><a class="nav {% if title == 'About' %}select{% endif %}" href="{% url 'club-about'%}">About</a></li>
     {% if user.is_authenticated %}
     <li class="dropdown">

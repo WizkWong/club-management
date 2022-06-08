@@ -19,5 +19,6 @@ urlpatterns = [
     path('request/<int:pk>/', views.view_request_detail, name='user-request-detail'),
     path('request/create/', views.create_request, name='user-request-create'),
     path('request/<int:pk>/delete/', views.delete_request, name='user-request-delete'),
-    path('attendance/', views.view_attendance, name='user-attendance')
+    path('attendance/', views.view_attendance, name='user-attendance'),
+    path('event/', views.view_event, name='user-event'),
 ]

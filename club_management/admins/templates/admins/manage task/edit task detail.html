@@ -8,7 +8,6 @@
         {% csrf_token %}
         <fieldset>
             <legend>Edit Task</legend>
-            <br>
             <p>Title: {{ form.title }}</p>
             <p>Detail: {{ form.detail }}</p>
             <p>Old Deadline: {{ task.deadline }}</p>

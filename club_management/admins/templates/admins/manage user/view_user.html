@@ -5,7 +5,7 @@
     <li style="float: right;"><a href="{% url 'admin-user-add' %}">Add</a></li>
 </ul>
 <br>
-<form style="margin-top: 5px;" method="GET" action="{% url 'admin-user' %}">
+<form style="margin-top: 5px;" method="GET">
     <label></label><input class="searchBar" type="text" name="search" value="{{ search }}" placeholder="search username">
     <input class="button" type="submit" value="Search">
 </form>

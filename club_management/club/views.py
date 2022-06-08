@@ -1,41 +1,40 @@
 from django.shortcuts import render
 from users.models import User_request
-from club_management.settings import MEDIA_URL
-# from django.http import HttpResponse
-
-
-def title():
-    with open(f'{MEDIA_URL.replace("/", "")}/page/title.txt', 'r') as f:
-        return f.read().strip()
+from admins.models import Page
 
 
 def home(request):
-    title()
-    paragraph1 = 'CSS will display overflow in this way, because doing something else could cause data loss. In CSS data loss means that some of your content vanishes. So the initial value of overflow is visible, and we can see the overflowing text. It is generally better to be able to see overflow, even if it is messy. If things were to disappear or be cropped as would happen if overflow was set to hidden you might not spot it when previewing your site. Messy overflow is at least easy to spot, and in the worst case, your visitor will be able to see and read the content even if it looks a bit strange.'
-    paragraph2 = 'CSS will display overflow in this way, because doing something else could cause data loss. In CSS data loss means that some of your content vanishes. So the initial value of overflow is visible, and we can see the overflowing text. It is generally better to be able to see overflow, even if it is messy. If things were to disappear or be cropped as would happen if overflow was set to hidden you might not spot it when previewing your site. Messy overflow is at least easy to spot, and in the worst case, your visitor will be able to see and read the content even if it looks a bit strange.'
+    if Page.objects.first() is None:
+        Page.objects.create()
+
+    page = Page.objects.first()
+
     context = {
         'title': 'Home',
-        'title_page': title(),
-        'top_background': 'page/default-top-background.jpg',
-        'image': 'page/home picture.jpg',
-        'title_text': 'Welcome',
-        'paragraph1': paragraph1,
-        'paragraph2': paragraph2,
-        'paragraph3': None,
+        'title_page': page.title_page if page.title_page else '',
+        'top_background': page.top_background if page.top_background else 'page/default-top-background.jpg',
+        'image': page.image if page.image else None,
+        'title_text': page.title_text if page.title_text else '',
+        'paragraph1': page.paragraph1 if page.paragraph1 else '',
+        'paragraph2': page.paragraph2 if page.paragraph2 else '',
+        'paragraph3': page.paragraph3 if page.paragraph3 else '',
+        'phone_number': page.phone_number if page.phone_number else '',
+        'email': page.email if page.email else '',
     }
     if request.user.is_superuser:
-        context.update({'pending_requests': [r for r in User_request.objects.all() if r.request_feedback.approval == r.request_feedback.PENDING]})
+        context.update({'pending_requests': [r for r in User_request.objects.all() if
+                                             r.request_feedback.approval == r.request_feedback.PENDING]})
 
     return render(request, 'club/home.html', context)
 
 
 def about(request):
+    page = Page.objects.first()
+
     context = {
         'title': 'About',
-        'title_page': title(),
-        'top_background': 'page/default-top-background.jpg',
-        'paragraph': None,
+        'title_page': page.title_page if page.title_page else '',
+        'top_background': page.top_background if page.top_background else 'page/default-top-background.jpg',
+        'paragraph': page.about_us if page.about_us else '',
     }
     return render(request, 'club/about.html', context)
-
-

@@ -1,7 +1,7 @@
 {% extends "club/base.html"%}
 {% block content %}
 <div class="title">All User Request</div>
-<form method="GET" action="{% url 'admin-request' type %}">
+<form method="GET">
     <label></label><input class="searchBar" type="text" name="search" value="{{ search }}" placeholder="search request title">
     <input class="button" type="submit" value="Search">
 </form>
@@ -12,30 +12,32 @@
     <a class="{% if type == 'accept' %}select{% endif %}" href="{% url 'admin-request' 'accept' %}">Accept</a>
     <a class="{% if type == 'reject' %}select{% endif %}" href="{% url 'admin-request' 'reject' %}">Reject</a>
 </div>
-{% for request in requests %}
-<div class="rectangleBox" style="
-    {% if request.request_feedback.approval == 1 %}
-        background-color: #67F178;
-    {% elif request.request_feedback.approval == 0 %}
-        background-color: #F16767;
-    {% else %}
-        background-color: #FFFF00;
-    {% endif %}
-">
-    <a href="{% url 'admin-request-detail' type request.id %}">
-        <div class="rectangleBoxApproval" style="margin-top: 35px;">
+<div style="overflow: auto; height: 560px">
+    {% for request in requests %}
+    <div class="rectangleBox" style="
         {% if request.request_feedback.approval == 1 %}
-            Accepted
+            background-color: #67F178;
         {% elif request.request_feedback.approval == 0 %}
-            Rejected
-        {% elif request.request_feedback.approval == 2 %}
-            Pending
+            background-color: #F16767;
+        {% else %}
+            background-color: #FFFF00;
         {% endif %}
-        </div>
-        <div class="rectangleBoxTitle">{{ request.title }}</div>
-        <div class="rectangleBoxShortText">request by {{ request.user|default_if_none:"DELETED" }}</div>
-        <div class="rectangleBoxTime">{{ request.datetime_created|date:"d F Y P" }}</div>
-    </a>
+    ">
+        <a href="{% url 'admin-request-detail' type request.id %}">
+            <div class="rectangleBoxApproval" style="margin-top: 35px;">
+            {% if request.request_feedback.approval == 1 %}
+                Accepted
+            {% elif request.request_feedback.approval == 0 %}
+                Rejected
+            {% elif request.request_feedback.approval == 2 %}
+                Pending
+            {% endif %}
+            </div>
+            <div class="rectangleBoxTitle">{{ request.title }}</div>
+            <div class="rectangleBoxShortText">request by {{ request.user|default_if_none:"DELETED" }}</div>
+            <div class="rectangleBoxTime">{{ request.datetime_created|date:"d F Y P" }}</div>
+        </a>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
 {% endblock content %}

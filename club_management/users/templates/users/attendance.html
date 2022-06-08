@@ -1,4 +1,28 @@
 {% extends "club/base.html"%}
 {% block content %}
-<h2><bold>Attendance</bold></h2>
+<h2>Attendance</h2>
+<form method="GET">
+    <label style="font-size: 20px; margin-right: 10px;">Take Attendance:</label>
+    <input style="
+        margin-right: 10px;
+        height: 30px;
+        font-size: 18px;
+        font-weight: bold;
+        border: 3px groove;
+    " type="number" name="code" placeholder="Code" min="0" max="999" required>
+    <input class="button" type="submit" value="Submit">
+</form>
+<div style="width: 100%; border-top: 1px solid;"></div>
+<div style="margin: 5px 0px; font-weight: bold; font-size: 18px;">List Of Event You Have Attended</div>
+<div style="overflow: auto; height: 550px;">
+    {% for atd in user_attendance %}
+    <div class="rectangleBox" style="background-color:#E8E8E8;">
+        <div style="margin-left: 10px;">
+        <div class="rectangleBoxTitle">{{ atd.event.title }}</div>
+        <div class="rectangleBoxShortText" style="color: green;">Start Time: {{ atd.event.start_time|date:"d F Y, P" }}</div>
+        <div class="rectangleBoxShortText" style="color: green; padding-bottom: 10px;">End Time: {{ atd.event.end_time|date:"d F Y, P" }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock content %}

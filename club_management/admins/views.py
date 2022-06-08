@@ -515,9 +515,11 @@ def edit_about_page(request):
 @login_required
 def manage_event(request):
     permission(request)
+    search = request.GET.get('search') if request.GET.get('search') is not None else ''
+
     content = {
         'title': 'Event Page',
-        'events': Event.objects.all().order_by('-datetime_created')
+        'events': Event.objects.filter(title__icontains=search).order_by('-datetime_created')
     }
     return render(request, 'admins/manage event/event.html', content)
 

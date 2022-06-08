@@ -62,7 +62,7 @@ def edit_attendance(request, pk):
         messages.success(request, f"Attendance from '{event.title}' Event is save")
 
     attendance = Attendance_of_user.objects.filter(event=event)
-    if len(attendance) == 0:
+    if not(attendance.exists()):
         raise Http404(f"Attendance of {event.title} is not created")
 
     content = {

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm
 from users.models import User_request, Task_assigned
 from .models import Request_feedback, Event, Task, Attendance_of_user, Page
-from .forms import RequestFeedbackForm, TaskForm, EditHomePageForm, EditAboutUsPageForm
+from .forms import RequestFeedbackForm, TaskForm, EditHomePageForm, EditAboutUsPageForm, EventForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -164,9 +164,7 @@ def delete_task_detail(request, pk):
     task = get_object_or_404(Task, id=pk)
 
     if request.method == 'POST':
-        for user_task in Task_assigned.objects.filter(task=task):
-            user_task.delete()
-        Task.objects.get(id=pk).delete()
+        Task.objects.get(id=task.id).delete()
         messages.success(request, f'{task.title} request is successfully delete!')
         return redirect('admin-task')
 
@@ -174,7 +172,7 @@ def delete_task_detail(request, pk):
         'title': 'Manage Task',
         'task': task,
     }
-    return render(request, 'admins/manage task/delete task.html', content)
+    return render(request, 'admins/manage task/task delete.html', content)
 
 
 @login_required
@@ -514,4 +512,80 @@ def edit_about_page(request):
     return render(request, 'admins/edit page.html', content)
 
 
+@login_required
+def manage_event(request):
+    permission(request)
+    content = {
+        'title': 'Event Page',
+        'events': Event.objects.all().order_by('-datetime_created')
+    }
+    return render(request, 'admins/manage event/event.html', content)
 
+
+@login_required
+def create_event(request):
+    permission(request)
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.save()
+            messages.success(request, f'Event Title: {form.title} is successfully created.')
+            return redirect('admin-event')
+
+    else:
+        form = EventForm()
+
+    content = {
+        'title': 'Event Page',
+        'form': form
+    }
+    return render(request, 'admins/manage event/event create.html', content)
+
+
+@login_required
+def modify_event(request, pk):
+    permission(request)
+    event = get_object_or_404(Event, id=pk)
+    if request.method == "POST":
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Event Title: {event.title} is successfully change.')
+            return redirect('admin-event')
+
+    else:
+        form = EventForm(instance=event)
+
+    content = {
+        'title': 'Event Page',
+        'form': form,
+        'event': event
+    }
+    return render(request, 'admins/manage event/event modify.html', content)
+
+
+@login_required
+def view_event(request, pk):
+    permission(request)
+    event = get_object_or_404(Event, id=pk)
+    content = {
+        'event': event
+    }
+    return render(request, 'admins/manage event/event detail.html', content)
+
+
+@login_required
+def delete_event(request, pk):
+    permission(request)
+    event = get_object_or_404(Event, id=pk)
+    if request.method == 'POST':
+        Event.objects.get(id=event.id).delete()
+        messages.success(request, f'{event.title} request is successfully delete!')
+        return redirect('admin-event')
+
+    content = {
+        'event': event
+    }
+    return render(request, 'admins/manage event/event delete.html', content)

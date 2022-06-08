@@ -58,17 +58,15 @@ class Request_feedback(models.Model):
     feedback = models.TextField(null=True, default=None)
 
 
-class Report(models.Model):
-    ATTENDANCE = 'ATD'
-    EVENT = 'EVT'
-    TYPE = {
-        (ATTENDANCE, 'Attendance'),
-        (EVENT, 'Event')
-    }
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)
-    title = models.CharField(max_length=100)
-    type = models.CharField(max_length=3, choices=TYPE)
-    content = models.TextField(null=True)
-    datetime_created = models.DateTimeField(default=timezone.now)
+class Page(models.Model):
+    title_page = models.CharField(null=True, default=None, max_length=30)
+    title_text = models.TextField(null=True, default=None)
+    paragraph1 = models.TextField(null=True, default=None)
+    paragraph2 = models.TextField(null=True, default=None)
+    paragraph3 = models.TextField(null=True, default=None)
+    about_us = models.TextField(null=True, default=None)
+    phone_number = models.IntegerField(null=True, default=None)
+    email = models.EmailField(null=True, default=None)
+    top_background = models.ImageField(null=True, default=None, upload_to='page')
+    image = models.ImageField(null=True, default=None, upload_to='page')
 

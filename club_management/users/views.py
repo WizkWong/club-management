@@ -236,6 +236,15 @@ def view_attendance(request):
     return render(request, 'users/attendance.html', content)
 
 
+def view_event(request):
+    search = request.GET.get('search') if request.GET.get('search') is not None else ''
+
+    content = {
+        'title': 'Event Page',
+        'events': Event.objects.filter(title__icontains=search).order_by('-datetime_created')
+    }
+    return render(request, 'users/event.html', content)
+
 # class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 #     model = User_request
 #     template_name = 'users/request/view request.html'

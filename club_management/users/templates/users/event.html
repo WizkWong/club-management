@@ -1,0 +1,20 @@
+{% extends "club/base.html"%}
+{% block content %}
+<div style="font-size: 24px; font-weight: bold;">Event</div>
+<form method="GET" style="margin-top: 5px;">
+    <label></label><input class="searchBar" type="text" name="search" value="{{ search }}" placeholder="search username">
+    <input class="button" type="submit" value="Search">
+</form>
+{% for event in events %}
+<div class="rectangleBox" style="background-color:#E8E8E8;">
+    <div style="margin-left: 10px;">
+        <div class="rectangleBoxTitle">{{ event.title }}</div>
+        <div style="margin-bottom: 5px;">Description:</div>
+        <div class="rectangleBoxShortText"> {{ event.detail }}</div>
+        <div class="rectangleBoxShortText" style="color: green;">Start Time: {{ event.start_time|date:"d F Y, P" }}</div>
+        <div class="rectangleBoxShortText" style="color: green;">End Time: {{ event.end_time|date:"d F Y, P" }}</div>
+        <div class="rectangleBoxTime">{{ event.datetime_created|date:"d F Y P" }}</div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

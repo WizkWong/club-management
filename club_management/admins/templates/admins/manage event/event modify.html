@@ -1,0 +1,22 @@
+{% extends "club/base.html"%}
+{% block content %}
+<div class="container">
+    <br>
+    <a class="button" href="{% url 'admin-event-detail' event.id %} ">Back</a>
+    <br><br>
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Modify Event</legend>
+            <p>Title: {{ form.title }}</p>
+            <p>Detail: {{ form.detail }}</p>
+            <p>Old Start Time: {{ event.start_time }}</p>
+            <p>New Start Time: {{ form.start_time }}</p>
+            <p>Old End Time: {{ event.end_time }}</p>
+            <p>New End Time: {{ form.end_time }}</p>
+        </fieldset>
+            <button type="submit">Change</button> <br>
+    </form>
+</div>
+
+{% endblock content %}

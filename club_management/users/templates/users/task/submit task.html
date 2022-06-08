@@ -1,0 +1,23 @@
+{% extends "club/base.html"%}
+{% block content %}
+<div class = "container">
+    <br>
+    <a class="button" href="{% url 'user-task' %}">Back</a>
+    <br><br>
+    <div class="title">{{task.task.title}}</div>
+    <br>
+    <p style="font-size: 18px;">Deadline: {{ task.task.deadline|date:"d F Y P" }}</p>
+    <div style="font-size:18px; margin-bottom: 5px;">Description:</div>
+    <div class="detailBox">{{ task.task.detail }}</div>
+    <br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Task submission</legend>
+            {{ form.as_p }}
+        </fieldset>
+            <button type="submit">Submit</button> <br>
+    </form>
+</div>
+
+{% endblock content %}

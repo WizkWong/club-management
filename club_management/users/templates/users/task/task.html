@@ -1,4 +1,19 @@
 {% extends "club/base.html"%}
 {% block content %}
-<h2><bold>Task</bold></h2>
-{% endblock %}
+<h2>Your Task</h2>
+{% for task in tasks %}
+<div class="rectangleBox" style="background-color:#E8E8E8;">
+    <a href="{% url 'submit-task' task.task.id %}">
+        <div class="rectangleBoxTitle">{{ task.task.title }}</div>
+        <div class="rectangleBoxShortText">
+            {% if task.complete == 1 %}
+                Your task is completed
+            {% else %}
+                Task incomplete
+            {% endif %}
+        </div>
+        <div class="rectangleBoxTime">{{ task.task.deadline|date:"d F Y P" }}</div>
+    </a>
+</div>
+{% endfor %}
+{% endblock content %}

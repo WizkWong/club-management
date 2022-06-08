@@ -1,0 +1,33 @@
+{% extends "club/base.html"%}
+{% block content %}
+<div style="margin-left: 10px;">
+    <br>
+    <a class="button" href="{% url 'admin-event' %}">Back</a>
+    <br><br>
+    <ul class="header">
+        <li style="font-weight: bold; font-size: 18px;">Title: {{ event.title }}</li>
+        <li style="float: right; font-size: 18px;">{{ event.datetime_created|date:"d F Y P" }}</li>
+    </ul>
+    <br>
+    <p style="font-size: 18px;">Deadline: {{ event.start_time|date:"d F Y P" }}</p>
+    <p style="font-size: 18px;">Deadline: {{ event.end_time|date:"d F Y P" }}</p>
+    <div style="font-size:18px; margin-bottom: 5px;">Description:</div>
+    <div class="detailBox">{{ event.detail }}</div>
+    <a class="button" style="float:left" href="{% url 'admin-event-modify' event.id %}">Edit</a>
+    <a class="button" style="float:right;" href="{% url 'admin-event-delete' event.id %}">Delete</a>
+    {% if atd %}
+        <br><br><br>
+        {% if code %}
+            <h3>Attendance Code: {{ code }}<h3>
+            <h3>Expired at: {{ expired|date:"d F Y P" }}<h3>
+        {% else %}
+            <h3>Attendance Code Expired<h3>
+        {% endif %}
+    {% else %}
+        <form method="POST">
+            {% csrf_token %}
+            <input class="button" type="submit" style="float:right; margin-right: 20px;" value="Create Attendance and Code">
+        </form>
+    {% endif %}
+</div>
+{% endblock content %}

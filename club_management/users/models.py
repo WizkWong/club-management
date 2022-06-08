@@ -30,18 +30,3 @@ class Task_assigned(models.Model):
 
     class Meta:
         unique_together = (('task', 'user'),)
-
-
-class Chat(models.Model):
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    detail = models.TextField(null=True, default=None)
-    file = models.FileField(null=True, upload_to='chat_files', default=None)
-    image = models.ImageField(null=True, upload_to='chat_files', default=None)
-    datetime_created = models.DateTimeField(default=timezone.now)
-
-
-class Pending_user(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    description = models.TextField()
-    datetime_created = models.DateTimeField(default=timezone.now)

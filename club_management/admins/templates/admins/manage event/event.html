@@ -1,9 +1,14 @@
 {% extends "club/base.html"%}
 {% block content %}
-<h2>Event</h2>
-<a class="button" href="{% url 'admin-event-create' %}" >Create New Event</a>
-<br><br>
-
+<ul class="header">
+    <li class="title" style="font-size: 24px;">Event</li>
+    <li style="float: right;"><a href="{% url 'admin-event-create' %}">Create New Event</a></li>
+</ul>
+<br>
+<form style="margin-top: 10px;" method="GET">
+    <label></label><input class="searchBar" type="text" name="search" value="{{ search }}" placeholder="search username">
+    <input class="button" type="submit" value="Search">
+</form>
 {% for event in events %}
 <div class="rectangleBox" style="background-color:#E8E8E8;">
     <a href="{% url 'admin-event-detail' event.id %}">

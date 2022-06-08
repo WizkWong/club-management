@@ -19,6 +19,11 @@ urlpatterns = [
     path('request/<str:types>/<int:pk>/delete/', views.delete_request, name='admin-request-delete'),
     path('report/', views.manage_report, name='admin-report'),
     path('report/generate:<int:pk>/', views.generate_report, name='admin-report-generate'),
-    path('edit_page/home', views.edit_home_page, name='admin-edit-home-page'),
-    path('edit_page/about', views.edit_about_page, name='admin-edit-about-page'),
+    path('edit_page/home/', views.edit_home_page, name='admin-edit-home-page'),
+    path('edit_page/about/', views.edit_about_page, name='admin-edit-about-page'),
+    path('event/', views.manage_event, name='admin-event'),
+    path('event/create/', views.create_event, name='admin-event-create'),
+    path('event/<int:pk>/modify/', views.modify_event, name='admin-event-modify'),
+    path('event/<int:pk>', views.view_event, name='admin-event-detail'),
+    path('event/<int:pk>/delete', views.delete_event, name='admin-event-delete'),
 ]

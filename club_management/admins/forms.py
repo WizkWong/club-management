@@ -1,5 +1,5 @@
 from django import forms
-from .models import Request_feedback, Task, Page
+from .models import Request_feedback, Task, Page, Event
 
 
 class DateTimePickerInput(forms.DateTimeInput):
@@ -19,6 +19,21 @@ class RequestFeedbackForm(forms.ModelForm):
     class Meta:
         model = Request_feedback
         fields = ['approval', 'feedback']
+
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['title', 'detail', 'start_time', 'end_time']
+        widgets = {
+            'detail': forms.Textarea(attrs={
+                "rows": 10,
+                "cols": 70,
+                "class": "field"
+            }),
+            'start_time': DateTimePickerInput(),
+            'end_time': DateTimePickerInput(),
+        }
 
 
 class TaskForm(forms.ModelForm):

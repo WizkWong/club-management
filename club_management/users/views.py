@@ -7,10 +7,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserRequestForm, TaskSubmissionForm
 from .models import User_request, Task_assigned
-from admins.models import Attendance_of_user, Event
-from django.views.generic import ListView, DetailView, CreateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
+from admins.models import Attendance_of_user, Event, Page
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.utils import timezone
@@ -35,7 +32,11 @@ def register(request):
     else:
         form = UserRegisterForm()
 
-    return render(request, 'users/register.html', {'form': form, 'title': 'Register'})
+    content = {
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
+        'form': form,
+    }
+    return render(request, 'users/register.html', content)
 
 
 def login_request(request):
@@ -58,7 +59,11 @@ def login_request(request):
     else:
         form = AuthenticationForm()
 
-    return render(request, 'users/login.html', {'form': form, 'title': 'Login'})
+    content = {
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
+        'form': form,
+    }
+    return render(request, 'users/login.html', content)
 
 
 def logout_request(request):
@@ -86,7 +91,7 @@ def profile(request):
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {
-        'title': 'Your Profile',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'u_form': u_form,
         'p_form': p_form
     }
@@ -108,7 +113,7 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
 
     content = {
-        'title': 'Change User Password',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form,
     }
     return render(request, 'users/change password.html', content)
@@ -119,7 +124,7 @@ def view_task(request):
     permission(request, request.user)
     tasks = Task_assigned.objects.filter(user=request.user).order_by('-task')
     content = {
-        'title': 'User Task',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'tasks': tasks,
     }
     return render(request, 'users/task/task.html', content)
@@ -142,7 +147,7 @@ def submit_task(request, pk):
         form = TaskSubmissionForm(instance=task)
 
     content = {
-        'title': 'Task submission',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'task': task,
         'form': form,
     }
@@ -153,7 +158,7 @@ def submit_task(request, pk):
 def view_request(request):
     permission(request, request.user)
     content = {
-        'title': 'request',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'requests': User_request.objects.filter(user=request.user).order_by('-datetime_created')
     }
     return render(request, 'users/request/view request.html', content)
@@ -164,7 +169,7 @@ def view_request_detail(request, pk):
     user_request = get_object_or_404(User_request, id=pk)
     permission(request, user_request.user)
     content = {
-        'title': 'request',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'request': user_request
     }
     return render(request, 'users/request/view request detail.html', content)
@@ -187,7 +192,7 @@ def create_request(request):
         form = UserRequestForm()
 
     content = {
-        'title': 'request',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form
     }
     return render(request, 'users/request/create request.html', content)
@@ -203,7 +208,7 @@ def delete_request(request, pk):
         return redirect('user-request')
 
     content = {
-        'title': 'request',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'request': user_request
     }
     return render(request, 'users/request/delete request.html', content)
@@ -234,7 +239,7 @@ def view_attendance(request):
     user_atd = [atd for atd in Attendance_of_user.objects.filter(user=request.user).order_by("event")
                 if atd.attendance != Attendance_of_user.ABSENT]
     content = {
-        'title': 'User Attendance',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'user_attendance': user_atd,
     }
     return render(request, 'users/attendance.html', content)
@@ -244,60 +249,8 @@ def view_event(request):
     search = request.GET.get('search') if request.GET.get('search') is not None else ''
 
     content = {
-        'title': 'Event Page',
+        'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'events': Event.objects.filter(title__icontains=search).order_by('-datetime_created')
     }
     return render(request, 'users/event.html', content)
 
-# class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
-#     model = User_request
-#     template_name = 'users/request/view request.html'
-#     context_object_name = 'requests'
-#     ordering = ['-datetime_created']
-#
-#     def get_queryset(self):
-#         return User_request.objects.filter(user=self.request.user)
-#
-#     def test_func(self):
-#         if self.request.user.is_superuser:
-#             return False
-#         return True
-#
-#
-# class RequestDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-#     model = User_request
-#     template_name = 'users/request/view request detail.html'
-#     context_object_name = 'request'
-#
-#     def test_func(self):
-#         request = self.get_object()
-#         if self.request.user.is_superuser or self.request.user != request.user:
-#             return False
-#         return True
-#
-#
-# class RequestCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
-#     model = User_request
-#     template_name = 'users/request/create request.html'
-#     fields = ['title', 'detail']
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
-#
-#     def test_func(self):
-#         if self.request.user.is_superuser:
-#             return False
-#         return True
-#
-#
-# class RequestDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-#     model = User_request
-#     template_name = 'users/request/delete request.html'
-#     success_url = '/request/'
-#
-#     def test_func(self):
-#         request = self.get_object()
-#         if self.request.user.is_superuser or self.request.user != request.user:
-#             return False
-#         return True

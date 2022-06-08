@@ -8,8 +8,9 @@ import os
 
 @receiver(pre_delete, sender=Task_assigned)
 def delete_task_file(sender, instance, **kwargs):
-    if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{instance.upload_file}'):
-        os.remove(f'{MEDIA_URL.replace("/", "")}/{instance.upload_file}')
+    if instance.upload_file:
+        if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{instance.upload_file}'):
+            os.remove(f'{MEDIA_URL.replace("/", "")}/{instance.upload_file}')
 
 
 @receiver(pre_save, sender=Page)

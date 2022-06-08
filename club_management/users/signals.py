@@ -24,6 +24,9 @@ def delete_profile(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=User)
 def replace_profile(sender, instance, **kwargs):
+    if len(User.objects.filter(id=instance.id)) == 0:
+        return
+
     if str(instance.profile.image).startswith('profile_pics'):
         return
 
@@ -44,13 +47,17 @@ def create_request_feedback(sender, instance, created, **kwargs):
 
 @receiver(pre_save, sender=Task_assigned)
 def replace_save_file(sender, instance, **kwargs):
+    if len(Task_assigned.objects.filter(task=instance.task, user=instance.user)) == 0:
+        return
+
     if str(instance.upload_file).startswith('files'):
         return
 
     else:
         old_file = Task_assigned.objects.get(task=instance.task, user=instance.user)
-        if old_file.upload_file:
-            if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{old_file.upload_file}'):
-                os.remove(f'{MEDIA_URL.replace("/", "")}/{old_file.upload_file}')
-        else:
-            return
+        if old_file is not None:
+            if old_file.upload_file:
+                if os.path.exists(f'{MEDIA_URL.replace("/", "")}/{old_file.upload_file}'):
+                    os.remove(f'{MEDIA_URL.replace("/", "")}/{old_file.upload_file}')
+            else:
+                return

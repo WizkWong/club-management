@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6c0*n)kx&1ei_=ozq6@eqv0o!cxfnxm20hmp#p)s1$&sai__lv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -84,10 +84,10 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'mssql',
-#         'NAME': 'Club System',
+#         'NAME': 'Your Club Name database',
 #         'USER': '',
 #         'PASSWORD': '',
-#         'HOST': 'LAPTOP-WIZKWONG',
+#         'HOST': 'Your host name',
 #         'PORT': '',
 #
 #         'OPTIONS': {

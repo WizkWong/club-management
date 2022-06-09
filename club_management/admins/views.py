@@ -356,7 +356,8 @@ def delete_request(request, types, pk):
 @login_required
 def manage_report(request):
     permission(request)
-    events = [e for e in Event.objects.all().order_by("-datetime_created") if e.end_time < timezone.now()]
+    t_events = [e for e in Event.objects.all().order_by("-datetime_created") if e.end_time < timezone.now()]
+    events = [e for e in t_events if Attendance_of_user.objects.filter(event=e).exists()]
 
     content = {
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
@@ -370,6 +371,8 @@ def generate_report(request, pk):
     permission(request)
     event = get_object_or_404(Event, id=pk)
     user_attendance = Attendance_of_user.objects.filter(event=event).order_by("-user")
+    if not(user_attendance.exists()):
+        raise Http404(f'Attendance is not generated for this Event Title: {event.title}')
     # Create Bytestream buffer
     buf = io.BytesIO()
     # Create a canvas

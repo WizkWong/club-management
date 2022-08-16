@@ -9,8 +9,8 @@
         <li style="float: right; font-size: 18px;">{{ event.datetime_created|date:"d F Y P" }}</li>
     </ul>
     <br>
-    <p style="font-size: 18px;">Deadline: {{ event.start_time|date:"d F Y P" }}</p>
-    <p style="font-size: 18px;">Deadline: {{ event.end_time|date:"d F Y P" }}</p>
+    <p style="font-size: 18px;">Start Time: {{ event.start_time|date:"d F Y P" }}</p>
+    <p style="font-size: 18px;">End Time: {{ event.end_time|date:"d F Y P" }}</p>
     <div style="font-size:18px; margin-bottom: 5px;">Description:</div>
     <div class="detailBox">{{ event.detail }}</div>
     <a class="button" style="float:left" href="{% url 'admin-event-modify' event.id %}">Edit</a>
@@ -18,10 +18,10 @@
     {% if atd %}
         <br><br><br>
         {% if code %}
-            <h3>Attendance Code: {{ code }}<h3>
-            <h3>Expired at: {{ expired|date:"d F Y P" }}<h3>
+            <h3>Attendance Code: {{ code }}</h3>
+            <h3>Expired at: {{ expired|date:"d F Y P" }}</h3>
         {% else %}
-            <h3>Attendance Code Expired<h3>
+            <h3>Attendance Code Expired</h3>
         {% endif %}
     {% else %}
         <form method="POST">

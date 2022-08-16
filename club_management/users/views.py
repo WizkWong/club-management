@@ -33,6 +33,7 @@ def register(request):
         form = UserRegisterForm()
 
     content = {
+        'title': 'Register',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form,
     }
@@ -60,6 +61,7 @@ def login_request(request):
         form = AuthenticationForm()
 
     content = {
+        'title': 'Login',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form,
     }
@@ -124,6 +126,7 @@ def view_task(request):
     permission(request, request.user)
     tasks = Task_assigned.objects.filter(user=request.user).order_by('-task')
     content = {
+        'title': 'User Task',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'tasks': tasks,
     }
@@ -147,6 +150,7 @@ def submit_task(request, pk):
         form = TaskSubmissionForm(instance=task)
 
     content = {
+        'title': 'User Task',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'task': task,
         'form': form,
@@ -158,6 +162,7 @@ def submit_task(request, pk):
 def view_request(request):
     permission(request, request.user)
     content = {
+        'title': 'User Request',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'requests': User_request.objects.filter(user=request.user).order_by('-datetime_created')
     }
@@ -169,6 +174,7 @@ def view_request_detail(request, pk):
     user_request = get_object_or_404(User_request, id=pk)
     permission(request, user_request.user)
     content = {
+        'title': 'User Request',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'request': user_request
     }
@@ -192,6 +198,7 @@ def create_request(request):
         form = UserRequestForm()
 
     content = {
+        'title': 'User Request',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form
     }
@@ -208,6 +215,7 @@ def delete_request(request, pk):
         return redirect('user-request')
 
     content = {
+        'title': 'User Request',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'request': user_request
     }
@@ -239,6 +247,7 @@ def view_attendance(request):
     user_atd = [atd for atd in Attendance_of_user.objects.filter(user=request.user).order_by("event")
                 if atd.attendance != Attendance_of_user.ABSENT]
     content = {
+        'title': 'User Attendance',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'user_attendance': user_atd,
     }
@@ -249,6 +258,7 @@ def view_event(request):
     search = request.GET.get('search') if request.GET.get('search') is not None else ''
 
     content = {
+        'title': 'Event',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'events': Event.objects.filter(title__icontains=search).order_by('-datetime_created')
     }

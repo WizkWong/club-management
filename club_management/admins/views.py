@@ -39,6 +39,7 @@ def manage_attendance(request):
         n = [att.attendance for att in Attendance_of_user.objects.filter(event=event.id)]
         attendance.append(Percentage(len(n) - n.count(Attendance_of_user.ABSENT), len(n)))
     content = {
+        'title': 'Manage Attendance',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'events': zip(events, attendance)
     }
@@ -66,6 +67,7 @@ def edit_attendance(request, pk):
         raise Http404(f"Attendance of {event.title} is not created")
 
     content = {
+        'title': 'Manage Attendance',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'event': event,
         'attendance_of_users': attendance,
@@ -86,6 +88,7 @@ def manage_task(request):
         number_completion.append(Percentage(n.count(True), len(n)))
 
     content = {
+        'title': 'Manage Task',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'tasks': zip(tasks, number_completion)
     }
@@ -115,6 +118,7 @@ def create_task(request):
         form = TaskForm()
 
     content = {
+        'title': 'Manage Task',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form,
         'all_user': User.objects.filter(is_superuser=False)
@@ -128,6 +132,7 @@ def view_task_detail(request, pk):
     task = get_object_or_404(Task, id=pk)
 
     content = {
+        'title': 'Manage Task',
         'title_page': Page.objects.first().title_page,
         'task': task,
         'assign_users': Task_assigned.objects.filter(task=task)
@@ -151,6 +156,7 @@ def edit_task_detail(request, pk):
         form = TaskForm(instance=task)
 
     content = {
+        'title': 'Manage Task',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form,
         'task': task,
@@ -169,6 +175,7 @@ def delete_task_detail(request, pk):
         return redirect('admin-task')
 
     content = {
+        'title': 'Manage Task',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'task': task,
     }
@@ -180,6 +187,7 @@ def manage_user(request):
     permission(request)
     search = request.GET.get('search') if request.GET.get('search') is not None else ''
     content = {
+        'title': 'Manage User',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'all_user': User.objects.filter(is_superuser=False).filter(username__startswith=search),
         'search': search
@@ -207,6 +215,7 @@ def edit_user(request, pk):
         p_form = ProfileUpdateForm(instance=user.profile)
 
     content = {
+        'title': 'Manage User',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'u_form': u_form,
         'p_form': p_form,
@@ -233,6 +242,7 @@ def change_password(request, pk):
         form = PasswordChangeForm(user)
 
     content = {
+        'title': 'Manage User',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form,
         'username': pk
@@ -254,6 +264,7 @@ def add_user(request):
         form = UserRegisterForm()
 
     content = {
+        'title': 'Manage User',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form
     }
@@ -271,6 +282,7 @@ def delete_user(request, pk):
         return redirect('admin-user')
 
     content = {
+        'title': 'Manage User',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'username': user.username
     }
@@ -300,6 +312,7 @@ def manage_request(request, types):
         raise Http404("Page not found")
 
     content = {
+        'title': 'Manage Request',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'type': types,
         'requests': requests,
@@ -327,6 +340,7 @@ def view_request_detail(request, types, pk):
         form = RequestFeedbackForm(instance=user_request.request_feedback)
 
     content = {
+        'title': 'Manage Request',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'request': user_request,
         'form': form,
@@ -345,6 +359,7 @@ def delete_request(request, types, pk):
         return redirect('admin-request', types=types)
 
     content = {
+        'title': 'Manage Request',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'request': user_request,
         'type': types
@@ -360,6 +375,7 @@ def manage_report(request):
     events = [e for e in t_events if Attendance_of_user.objects.filter(event=e).exists()]
 
     content = {
+        'title': 'Manage Report',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'events': events
     }
@@ -523,6 +539,7 @@ def manage_event(request):
     search = request.GET.get('search') if request.GET.get('search') is not None else ''
 
     content = {
+        'title': 'Event',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'events': Event.objects.filter(title__icontains=search).order_by('-datetime_created')
     }
@@ -545,6 +562,7 @@ def create_event(request):
         form = EventForm()
 
     content = {
+        'title': 'Event',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form
     }
@@ -566,6 +584,7 @@ def modify_event(request, pk):
         form = EventForm(instance=event)
 
     content = {
+        'title': 'Event',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'form': form,
         'event': event
@@ -600,6 +619,7 @@ def view_event(request, pk):
         expired = None
 
     content = {
+        'title': 'Event',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'event': event,
         'atd': check_exist,
@@ -619,6 +639,7 @@ def delete_event(request, pk):
         return redirect('admin-event')
 
     content = {
+        'title': 'Event',
         'title_page': Page.objects.first().title_page if Page.objects.first().title_page else '',
         'event': event
     }

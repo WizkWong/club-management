@@ -28,6 +28,6 @@ It has three type of user: admin, member, and non-registered member(user)
 - Additional: <br>
   - Attendance code will be genrated when attendance is set, and will expired after the amount of time had passed. <br>
 
-- Facts of this project during development: <br>
-  - Honestly, I(WizkWong) do 90 percent of the work and manage to complete it in time. If you don't trust me, you can see the commit history. The rest 10 percent only my other two member, but I guide them to do, so my idea is there. <br>
-  - I guess I am the Project Manager, Full-Stack Developer, and Software Test Engineer.
+Facts of this project during development: <br> <br>
+Honestly, I(WizkWong) do 90 percent of the work and manage to complete it in time. If you don't trust me, you can see the commit history. The rest 10 percent only my other two member, but I guide them to do, so my idea is there. <br> <br>
+I guess I am the Project Manager, Full-Stack Developer, and Software Test Engineer.

@@ -12,15 +12,17 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+try:
+    from club_management.private_settings import *
+except ImportError:
+    print("Error: make a local version of private_settings.py with all the secrets inside")
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6c0*n)kx&1ei_=ozq6@eqv0o!cxfnxm20hmp#p)s1$&sai__lv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

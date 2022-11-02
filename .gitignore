@@ -1,3 +1,4 @@
 .idea/
 __pycache__
 venv
+club_management/private_settings.py
